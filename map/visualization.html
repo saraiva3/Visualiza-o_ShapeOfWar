@@ -74,21 +74,40 @@
       </div>
    </div>
 
-
    <div class="container-fluid">
       <div class="row">
-         <div class="col">
-         </div>
-         <div class="col">
+         <div class="col-md-8">
                <svg class="map"></svg>
                <div class="legend-container">
                   <svg class="legend"></svg>
                </div>
          </div>
-         <div class="col">
+         <div class="col-md-4">
+            <svg class="chart"></svg>
          </div>
       </div>
    </div>
+
+   <!-- <div class="container-fluid">
+      <div class="row">
+        <div class="col">
+        </div>
+        <div class="col">
+           <div class="context-btn-group">
+              <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                <label onClick="ascending();" class="btn btn-sm btn-enemies my-focus active">
+                  <input type="radio" name="options" id="asc" autocomplete="off" checked>Conflicts <i class="fas fa-thumbs-down"></i>
+                </label>
+                <label onClick="descending();" class="btn btn-sm btn-allies">
+                  <input type="radio" name="options" id="desc" autocomplete="off">Alliances <i class="fas fa-thumbs-up"></i>
+                </label>
+              </div>
+           </div>
+        </div>
+        <div class="col">
+        </div>
+      </div>
+   </div> -->
 
    <script src="https://d3js.org/d3.v5.min.js"></script>
    <script src="https://d3js.org/topojson.v1.min.js"></script>

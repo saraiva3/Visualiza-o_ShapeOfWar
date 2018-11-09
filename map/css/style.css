@@ -92,8 +92,9 @@ g {
    text-align: center;
 }
 
-.bar {
-   fill: #377eb8;
+
+.bar{
+   fill: #e41a1c;
 }
 
 .grid line {

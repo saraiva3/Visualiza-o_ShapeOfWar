@@ -1,13 +1,12 @@
 // define margens e tamanho da tela
 var margin = {top: 50, right: 50, bottom: 50, left: 50},
-            width = 1000,
+            width = 1012,
             height = 600 - margin.top - margin.bottom;
 
 // seleciona o SVG e define sua dimensão
-var svg = d3.select("svg")
+var svg = d3.select(".map")
    .attr("width", width)
-   .attr("height", height)
-   .attr("class", "map");
+   .attr("height", height);
 
 // define e cria o elemento "g" para o mapa
 var g = svg
@@ -37,6 +36,47 @@ var zoom = d3.zoom()
 });
 svg.call(zoom);
 
+var xAxisLabelText = "Unique enemies";
+var xAxisLabelOffset = 75;
+
+var innerWidth  = 506 - margin.left*1.5;
+var innerHeight = 275 - margin.top;
+
+var chartSVG = d3.select(".chart")
+   .attr("width",  506)
+   .attr("height", 275);
+
+var chartTooltip = d3.select("body")
+   .append("div")
+   .attr("class", "chart-tooltip")
+   .style("display", "none");
+
+var chartG = chartSVG.append("g")
+   .attr("transform", "translate(" + (margin.left) + "," + margin.top/2 + ")")
+   .attr('class', "chart");
+
+var xAxisG = chartG.append("g")
+   .attr("class", "x axis")
+   .attr("transform", "translate(0," + innerHeight + ")")
+
+var xAxisLabel = xAxisG.append("text")
+   .style("text-anchor", "middle")
+   .attr("x", innerWidth / 2)
+   .attr("y", xAxisLabelOffset)
+   .attr("class", "label")
+   .text(xAxisLabelText);
+
+var yAxisG = chartG.append("g")
+   .attr("class", "y axis");
+
+var xScale = d3.scaleLinear().range([0, innerWidth]);
+var yScale = d3.scaleBand().rangeRound([0, innerHeight]).padding(0.3);
+
+var xAxis = d3.axisBottom().scale(xScale)
+   .ticks(5)
+   .tickFormat(d3.format("~s"));
+
+var yAxis;
 /* mantém controle do estado atual da visualização {
    0: inimigos em geral
    1: alianças em geral
@@ -55,6 +95,9 @@ var enemiesCount = {};              // número de inimizades de cada país
 var alliesCount = {};               // número de alianças de cada país
 var enemiesByCountry = {};          // número de inimizades que cada país teve com os demais
 var alliesByCountry = {};           // número de alianças que cada país formou com os demais
+var countries = {};
+
+var chartData = {};
 
 // define promise para que a função para gerar o mapa só seja executada após a leitura dos arquivos
 var promises = [];
@@ -63,7 +106,6 @@ promises.push(d3.csv('data/totalEnemies.csv'));      // contem número de inimiz
 promises.push(d3.csv('data/totalAllies.csv'));       // contem número de alianças de cada paísel
 promises.push(d3.csv('data/nodes.csv'));               // nós do grafo
 promises.push(d3.csv('data/edges.csv'));        // grafo contendo relação entre países em cada conflito
-
 
 // executa a função "ready" após leitura dos arquivos
 Promise.all(promises)
@@ -76,14 +118,15 @@ Promise.all(promises)
 function ready(data) {
 
    // monta o vetor com o número de inimizades de cada país
-   data[1].forEach(function(d) { enemiesCount[d.id] = +d.enemies; });
+   data[1].forEach(function(d) { enemiesCount[d.id] = +d.amount; });
 
    // monta o vetor com o número de alianças de cada país
-   data[2].forEach(function(d) { alliesCount[d.id] = +d.allies; });
+   data[2].forEach(function(d) { alliesCount[d.id] = +d.amount; });
 
    // inicializa o vetor de objetos de objetos para
    // contabilizar número de alianças/inimizades que cada país "d" teve com o restante dos "g" países
    data[3].forEach(function(d){
+      countries[d.id] = d.country;
       enemiesByCountry[d.id] = {};
       alliesByCountry[d.id] = {};
       data[3].forEach(function(g){
@@ -200,6 +243,39 @@ function ready(data) {
       .attr("dy", ".71em")
       .style("text-anchor", "end")
       .text("axis title");
+
+   yAxis = d3.axisLeft().scale(yScale);
+
+   chartData['enemies'] = data[1].sort(function(x,y){ return +x.amount < +y.amount ? 1 : -1; }).slice(0,15);
+   chartData['allies'] = data[2].sort(function(x,y){ return +x.amount < +y.amount ? 1 : -1; }).slice(0,15);
+
+   xScale.domain([0, d3.max(chartData.enemies, function (d){ return +d.amount; })]);
+   yScale.domain(chartData.enemies.map(function (d){ return d.id; }));
+
+   xAxisG.call(xAxis);
+   yAxisG.call(yAxis);
+
+   //Barra e tooltip
+   var bars = chartG.selectAll(".bar")
+      .data(chartData.enemies)
+      .enter().append("rect")
+      .attr("class", "bar")
+      .attr("x", 1)
+      .attr("y", function(d) { return yScale(d.id); })
+      .attr("width", function(d) { return xScale(d.amount); })
+      .attr("height", yScale.bandwidth())
+      .on("mouseover", function(){
+         d3.select(this).style("fill", '#377eb8');
+      })
+      .on("mousemove", chartMouseMove)
+      .on("mouseout", function(){
+         if(status == 0 || status == 2){
+            d3.select(this).style("fill", '#e41a1c');
+         }else{
+            d3.select(this).style("fill", '#33a02c');
+         }
+         chartTooltip.style("display", "none");
+      });
 }
 
 // mostra tooltip quando houver hover em um país
@@ -247,17 +323,17 @@ function mouseOver(d) {
          }
          break;
 
-      // mostra número de alianças que o país selecionado teve com os países que o cursor passar por cima
-      case '3':
-         if(selectedCountry.id == d.id){
-            tooltip.html('Selected:</br>' + d.properties.name);
-         }else{
-            if((selectedCountry.id in alliesByCountry) && (d.id in alliesByCountry[selectedCountry.id])){
-               n = alliesByCountry[selectedCountry.id][d.id];
+         // mostra número de alianças que o país selecionado teve com os países que o cursor passar por cima
+         case '3':
+            if(selectedCountry.id == d.id){
+               tooltip.html('Selected:</br>' + d.properties.name);
+            }else{
+               if((selectedCountry.id in alliesByCountry) && (d.id in alliesByCountry[selectedCountry.id])){
+                  n = alliesByCountry[selectedCountry.id][d.id];
+               }
+               tooltip.html(selectedCountry.name + ' - ' + d.properties.name + '</br>Alliances: ' + n);
             }
-            tooltip.html(selectedCountry.name + ' - ' + d.properties.name + '</br>Alliances: ' + n);
-         }
-         break;
+            break;
    }
 }
 
@@ -329,6 +405,20 @@ function toEnemies(){
    d3.select(".btn-enemies").classed("my-focus", true);
    d3.select(".btn-allies").classed("my-focus", false);
 
+   var max = myMax(enemiesCount);
+   xScale.domain([0, max]);
+   xAxis.ticks(Math.min(max,10))
+   xAxisG
+      .transition()
+      .duration(500)
+      .call(xAxis);
+   d3.selectAll(".bar")
+      .data(chartData.enemies)
+      .transition()
+      .duration(500)
+      .style("fill", "#e41a1c")
+      .attr("width", function(d,i) { return xScale(chartData.enemies[i].amount); });
+
    status = 0;    // altera estado para 0
 }
 
@@ -374,6 +464,20 @@ function toAllies(){
    d3.select(".btn-enemies").classed("my-focus", false);
    d3.select(".btn-allies").classed("my-focus", true);
 
+   var max = myMax(alliesCount);
+   xScale.domain([0, max]);
+   xAxis.ticks(Math.min(max,10))
+   xAxisG
+      .transition()
+      .duration(500)
+      .call(xAxis);
+   d3.selectAll(".bar")
+      .data(chartData.allies)
+      .transition()
+      .duration(500)
+      .style("fill", "#33a02c")
+      .attr("width", function(d,i) { return xScale(chartData.allies[i].amount); });
+
    status = 1;    // altera estado para 1
 }
 
@@ -388,7 +492,6 @@ function reset(){
 // atualiza o mapa quando o usuário clicar em algum país
 function updateMap(d){
    selected = d3.select(this);
-
    // se o mapa estiver mostrando as inimizades
    if(status == 0 || status == 2){
       // se o país já estiver selecionado, retorna o estado da visualização para "0"
@@ -397,6 +500,7 @@ function updateMap(d){
          toEnemies();
       }else{
          max = myMax(enemiesByCountry[d.id]);   // calcula maior quantidade de inimizades que o país teve
+         array = getTopCountries(enemiesByCountry[d.id]).slice(0,15);
 
          // colore os países
          d3.selectAll("g.countries path")
@@ -432,7 +536,7 @@ function updateMap(d){
          selectedCountry = {name:d.properties.name, id:d.id};  // armazena id do país selecionado
 
          d3.select(".title h3")  // atualiza título da visualização com o nome do país selecionado
-            .html("Alliances formed by " + selectedCountry.name + " since 1500");
+            .html("Conflicts faced by " + selectedCountry.name + " since 1500");
       }
    }else{
       // se o país já estiver selecionado, retorna o estado da visualização para "1"
@@ -441,6 +545,7 @@ function updateMap(d){
          toAllies();
       }else{
          max = myMax(alliesByCountry[d.id]);    // calcula maior quantidade de alianças que o país teve
+         array = getTopCountries(alliesByCountry[d.id]).slice(0,15);
 
          // colore os países
          d3.selectAll("g.countries path")
@@ -476,9 +581,34 @@ function updateMap(d){
          selectedCountry = {name:d.properties.name, id:d.id};  // armazena id do país selecionado
 
          d3.select(".title h3")     // atualiza título da visualização com o nome do país selecionado
-            .html("Conflicts faced by " + selectedCountry.name + " since 1500");
+            .html("Alliances formed by " + selectedCountry.name + " since 1500");
       }
    }
+
+   xScale.domain([0, max]);
+   xAxis.ticks(Math.min(max,10));
+   xAxisG.transition().duration(500)
+      .call(xAxis);
+
+   d3.selectAll(".bar").transition().duration(500)
+      .attr("width", function(d,i){
+         if(i in array){
+            return xScale(array[i].amount);
+         }else{
+            return xScale(0);
+         }
+      })
+      .style("fill", function(){
+         if(status == 0 || status == 2){
+            return "#e41a1c";
+         }
+         return "#33a02c";
+      });
+
+   yScale.domain(array.map(function (d){ return d.id; }));
+   var newYAxis = d3.axisLeft().scale(yScale);
+   yAxisG.transition().duration(500)
+      .call(newYAxis);
 }
 
 // calcula quantida de zoom a ser dada por vez
@@ -496,3 +626,110 @@ function myMax(array){
    };
    return max;
 }
+
+// função para calcular número de inimizades e alianças máximas de um país
+function getTopCountries(array){
+   var topCountries = [];
+   for(var key in array){
+      if(array[key] > 0){
+         topCountries.push({id:key, amount:array[key]});
+      }
+   }
+   return topCountries.sort(function(x, y){ return x.amount < y.amount ? 1 : -1;});
+}
+
+function chartMouseMove(d,i){
+   chartTooltip
+      .style("left", d3.event.pageX - 2 + "px")
+      .style("top", d3.event.pageY - 40 + "px")
+      .style("display", "inline-block");
+
+   switch(status){
+
+      // mostra o número total de inimizades que o país teve até o momento
+      case '0':
+         chartTooltip.html((countries[d.id]) + "<br>" + "Total:" + (d.amount) + "<br>" );
+         break;
+
+      // mostra o número total de alianças que o país formou até o momento
+      case '1':
+         chartTooltip.html((countries[d.id]) + "<br>" + "Total:" + (d.amount) + "<br>" );
+         break;
+
+      // mostra número de inimizades que o país selecionado teve com os países que o cursor passar por cima
+      case '2':
+         array = getTopCountries(enemiesByCountry[selectedCountry.id]);
+         chartTooltip.html(countries[array[i].id] + "<br>" + "Total:" + array[i].amount + "<br>" );
+         break;
+
+      // mostra número de alianças que o país selecionado teve com os países que o cursor passar por cima
+      case '3':
+         array = getTopCountries(alliesByCountry[selectedCountry.id]);
+         chartTooltip.html(countries[array[i].id] + "<br>" + "Total:" + array[i].amount + "<br>" );
+         break;
+   }
+}
+// //Ordenação ascending
+// function ascending() {
+//   var x0 = yScale.domain(chartData.sort(this.checked
+//     ? function(a, b) { return +b.enemies - a.enemies; }
+//     : function(a, b) { return d3.ascending(a.country, b.country); })
+//     .map(function(d) {   return d.country; }))
+//     .copy();
+//
+//     chartSVG.selectAll(".bar")
+//     .sort(function(a, b) { return x0(a.country) - x0(b.country); });
+//
+//     // Efeito de transicao
+//     var transition = chartG.transition().duration(750),
+//     delay = function(d, i) { return i * 50; };
+//
+//     transition.selectAll(".bar")
+//     .delay(delay)
+//     .attr("y", function(d) { return x0(d.country); });
+//     transition.select(".y.axis")
+//     .call(yAxis)
+//     .selectAll("g")
+//     .delay(delay);
+//
+//     //Remove as labels e recoloca eles
+//     d3.selectAll("#valueLabel").remove();
+//
+//     bars.enter().append('text')
+//     .data(chartData)
+//     .attr("id","valueLabel")
+//     .attr({'x':function(d) { return xScale(d[xColumn])+15; },'y':function(d,i){ return yScale(d[yColumn])+17; }})
+//     .text(function(d){ return d.enemies;}).style({'fill':'#000','font-size':'15px'});
+//
+//   }
+//
+//   //Ordenação descending
+  // function descending() {
+  //   var x0 = yScale.domain(chartData.sort(this.checked
+  //     ? function(a, b) { return a.enemies -  b.enemies ; }
+  //     : function(a, b) { return d3.descending(a.country, b.country); })
+  //     .map(function(d) { return d.country; }))
+  //     .copy();
+  //
+  //     chartSVG.selectAll(".bar")
+  //     .sort(function(a, b) { return x0(a.country) - x0(b.country); });
+  //
+  //     var transition = chartG.transition().duration(750),
+  //     delay = function(d, i) { return i * 50; };
+  //     transition.selectAll(".bar")
+  //     .delay(delay)
+  //     .attr("y", function(d) { return x0(d.country); });
+  //
+  //     transition.select(".y.axis")
+  //     .call(yAxis)
+  //     .selectAll("g")
+  //     .delay(delay);
+  //
+  //     // d3.selectAll("#valueLabel").remove();
+  //
+  //     // d3.selectAll(".bar")
+  //     // .data(chartData).enter()
+  //     // // .attr("id","valueLabel")
+  //     // .attr({'x':function(d) { return xScale(d[xColumn])+15; },'y':function(d,i){ return yScale(d[yColumn])+17; }})
+  //     // .text(function(d){ return d.enemies;}).style({'fill':'#000','font-size':'15px'});
+  //   }
