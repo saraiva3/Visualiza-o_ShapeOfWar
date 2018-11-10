@@ -97,23 +97,23 @@ var lineChartHeight = 450;
 var lineChartInnerWidth  = lineChartWidth - margin.left - margin.right;
 var lineChartInnerHeight = lineChartHeight - margin.top;
 
-// 5. X scale will use the index of our data
+// Escala X e Y do grafico da serie temporal
 var lineChartXScale = d3.scaleLinear()
-    .range([0, lineChartInnerWidth]); // output
+    .range([0, lineChartInnerWidth]);
 
-// 6. Y scale will use the randomly generate number
+
 var lineChartYScale = d3.scaleLinear()
-    .range([lineChartInnerHeight, 0]); // output
+    .range([lineChartInnerHeight, 0]);
 
-// 5. X scale will use the index of our data
+
 var countryXScale = d3.scaleLinear()
-  .range([0, lineChartInnerWidth]); // output
+  .range([0, lineChartInnerWidth]);
 
-// 6. Y scale will use the randomly generate number
+
 var countryYScale = d3.scaleLinear()
   .range([lineChartInnerHeight, 0]); // output
 
-// 1. Add the SVG to the page and employ #2
+// Adiciona o SVG
 var lineChartSVG = d3.select(".line-chart")
   .attr("width", lineChartWidth)
   .attr("height", lineChartHeight)
@@ -153,7 +153,8 @@ var chartData = {}
 
 // define promise para que a função para gerar o mapa só seja executada após a leitura dos arquivos
 var promises = [];
-promises.push(d3.json('data/world_countries.json'));
+// Todos dados Usados
+promises.push(d3.json('data/world_countries.json')); // Json com os paises
 promises.push(d3.csv('data/totalEnemies.csv'));      // contem número de inimizades de cada país
 promises.push(d3.csv('data/totalAllies.csv'));       // contem número de alianças de cada paísel
 promises.push(d3.csv('data/nodes.csv'));               // nós do grafo
@@ -287,9 +288,9 @@ function ready(data) {
    // define svg para legenda e as suas dimensões
    var lSvg = d3.select(".legend")
       .attr("width", width)
-      .attr("height", legendHeight);
+      .attr("height", 65); // altura do svg da legenda
 
-   //
+   // define a legenda
    var legend = lSvg.append("defs")
       .append("svg:linearGradient")
       .attr("id", "gradient")
@@ -324,7 +325,7 @@ function ready(data) {
       .attr("stop-color", d3.interpolateReds(1))
       .attr("stop-opacity", 1);
 
-   // gera a barra da lengenda
+   // gera a barra da legenda
    lSvg.append("rect")
       .attr("width", width - margin.left - margin.right)
       .attr("height", legendHeight - 30)
@@ -359,9 +360,11 @@ function ready(data) {
 
    yAxis = d3.axisLeft().scale(yScale);
 
+   // configuracao dos dados
    chartData['enemies'] = data[1].sort(function(x,y){ return +x.amount < +y.amount ? 1 : -1; }).slice(0,30);
    chartData['allies'] = data[2].sort(function(x,y){ return +x.amount < +y.amount ? 1 : -1; }).slice(0,30);
 
+   // escala X e Y
    xScale.domain([0, d3.max(chartData.enemies, function (d){ return +d.amount; })]);
    yScale.domain(chartData.enemies.map(function (d){ return d.id; }));
 
@@ -397,54 +400,51 @@ function ready(data) {
    lineChartXScale.domain([startYear, currentYear]);
    lineChartYScale.domain([0, d3.max(conflictsByYear, function(d){ return +d.conflicts})]);
 
-   // 7. d3's line generator
+   // Gera as linhas da serie temporal
    line = d3.line()
-      .x(function(d) { return lineChartXScale(d.year); }) // set the x values for the line generator
-      .y(function(d) { return lineChartYScale(d.conflicts); }) // set the y values for the line generator
-      .curve(d3.curveMonotoneX) // apply smoothing to the line
+      .x(function(d) { return lineChartXScale(d.year); })
+      .y(function(d) { return lineChartYScale(d.conflicts); })
+      .curve(d3.curveMonotoneX)
 
    countryLine = d3.line()
-      .x(function(d) { return lineChartXScale(d.year); }) // set the x values for the line generator
-      .y(function(d) { return lineChartYScale(d.amount); }) // set the y values for the line generator
-      .curve(d3.curveMonotoneX) // apply smoothing to the line
+      .x(function(d) { return lineChartXScale(d.year); })
+      .y(function(d) { return lineChartYScale(d.amount); })
+      .curve(d3.curveMonotoneX)
 
-   // 3. Call the x axis in a group tag
+   // linha X
    lineChartXAxis = lineChartSVG.append("g")
       .attr("class", "x axis")
       .attr("transform", "translate(0," + lineChartInnerHeight + ")")
-      .call(d3.axisBottom(lineChartXScale).ticks(10)); // Create an axis component with d3.axisBottom
+      .call(d3.axisBottom(lineChartXScale).ticks(10));
 
-   // 4. Call the y axis in a group tag
+   // linha Y
    lineChartYAxis = lineChartSVG.append("g")
       .attr("class", "y axis")
-      .call(d3.axisLeft(lineChartYScale)); // Create an axis component with d3.axisLeft
+      .call(d3.axisLeft(lineChartYScale));
 
-   // 9. Append the path, bind the data, and call the line generator
+   // seta os dados para as linhas
    lineChartSVG.append("path")
-      .datum(conflictsByYear) // 10. Binds data to the line
-      .attr("class", "line") // Assign a class for styling
-      .attr("d", line); // 11. Calls the line generator
+      .datum(conflictsByYear)
+      .attr("class", "line")
+      .attr("d", line);
 
    lineChartSVG.append("path")
       .datum(countriesConflicts['0'])
-      .attr("class", "country-line") // Assign a class for styling
+      .attr("class", "country-line")
       .attr("d", countryLine)
       .style("display", "none");
 
-   // 12. Appends a circle for each datapoint
+   // Coloca circulos em cada ponto
    lineChartSVG.selectAll(".dot")
       .data(conflictsByYear)
-      .enter().append("circle") // Uses the enter().append() method
-         .attr("class", "dot") // Assign a class for styling
+      .enter().append("circle")
+         .attr("class", "dot")
          .attr("cx", function(d) { return lineChartXScale(d.year) })
          .attr("cy", function(d) { return lineChartYScale(d.conflicts) })
          .attr("r", circleRadius)
          .on("mouseover", function(d) {
          		console.log(d)
-           // this.attr('class', 'focus')
-         })
-         .on("mouseout", function() {  })
-         .on("mousemove", mousemove);
+         });
 
    /* ------ SÉRIE TEMPORAL ------ */
 
@@ -591,9 +591,6 @@ function toEnemies(){
       .style("fill", "#e41a1c")
       .attr("width", function(d,i) { return xScale(chartData.enemies[i].amount); });
 
-   // d3.select(".country-line")
-   //    .style("stroke", "#e41a1c");
-
    d3.select(".country-line")
       .datum(countriesConflicts['0'].slice(from,to))
       .transition().duration(500)
@@ -713,72 +710,95 @@ function toAllies(){
 // Restaura escala e posicionamento padrão da visualização
 function updateLineChart(){
 
-   from = d3.select("#from").property("value") - startYear;
-   to = d3.select("#to").property("value") - startYear+1;
+   from = d3.select("#from").property("value") ;
+   to = d3.select("#to").property("value") ;
 
-   filteredConflicts = conflictsByYear.slice(from,to);
 
-   lineChartXScale.domain([d3.select("#from").property("value"), d3.select("#to").property("value")]);
-   lineChartYScale.domain([0, d3.max(filteredConflicts, function(d){ return +d.conflicts})]);
+   console.log(to)
+   console.log(from)
+   if (parseInt(to) > parseInt(from)  && to <= 2018 && from >= 1501){
+     document.getElementById("from").style.border = "1px solid #ced4da ";
+     document.getElementById("to").style.border = "1px solid #ced4da ";
+     from = from - startYear;
+     to = to - startYear+1;
+     filteredConflicts = conflictsByYear.slice(from ,to);
 
-   // 3. Call the x axis in a group tag
-   lineChartXAxis
-      .transition().duration(500)
-      .call(d3.axisBottom(lineChartXScale).ticks(10)); // Create an axis component with d3.axisBottom
+     lineChartXScale.domain([d3.select("#from").property("value"), d3.select("#to").property("value")]);
+     lineChartYScale.domain([0, d3.max(filteredConflicts, function(d){ return +d.conflicts})]);
 
-   // 4. Call the y axis in a group tag
-   lineChartYAxis
-      .transition().duration(500)
-      .call(d3.axisLeft(lineChartYScale)); // Create an axis component with d3.axisLeft
+     //linha X
+     lineChartXAxis
+        .transition().duration(500)
+        .call(d3.axisBottom(lineChartXScale).ticks(10));
 
-   lineChartSVG.selectAll(".line")
-      .datum(filteredConflicts) // 10. Binds data to the line
-      .transition().duration(500)
-      .attr("d", line); // 11. Calls the line generator
+     // linha Y
+     lineChartYAxis
+        .transition().duration(500)
+        .call(d3.axisLeft(lineChartYScale));
 
-   lineChartSVG.selectAll(".dot").remove();
+     lineChartSVG.selectAll(".line")
+        .datum(filteredConflicts)
+        .transition().duration(500)
+        .attr("d", line);
 
-   var countryDot = lineChartSVG.selectAll(".dot")
-      .data(filteredConflicts)
-      .enter().append("circle"); // Uses the enter().append() method
-   countryDot
-      .transition().duration(500)
-      .attr("class", "dot") // Assign a class for styling
-      .attr("cx", function(d) { return lineChartXScale(d.year) })
-      .attr("cy", function(d) { return lineChartYScale(d.conflicts) })
-      .attr("r", circleRadius)
-   countryDot.on("mouseover", function(d) {
-         console.log(d)
-         // this.attr('class', 'focus')
-      });
-      // .on("mouseout", function() {  })
-      // .on("mousemove", mousemove);
+     lineChartSVG.selectAll(".dot").remove();
 
-   if(status == 2 || status == 3){
-      filteredCountryConflicts = countriesConflicts[selectedCountry.id].slice(from,to);
-      lineChartSVG.selectAll(".country-line")
-         .datum(filteredCountryConflicts)
-         .transition().duration(500)
-         .attr("d", countryLine);
+     var countryDot = lineChartSVG.selectAll(".dot")
+        .data(filteredConflicts)
+        .enter().append("circle");
+     countryDot
+        .transition().duration(500)
+        .attr("class", "dot")
+        .attr("cx", function(d) { return lineChartXScale(d.year) })
+        .attr("cy", function(d) { return lineChartYScale(d.conflicts) })
+        .attr("r", circleRadius)
+     countryDot.on("mouseover", function(d) {
+           console.log(d)
+        });
 
-      lineChartSVG.selectAll(".country-dot").remove();
-      var countryDot = lineChartSVG.selectAll(".country-dot")
-         .data(filteredCountryConflicts)
-         .enter().append("circle"); // Uses the enter().append() method
-      countryDot
-         .transition().duration(500)
-         .style("fill", function(){ return status == 2 ? "#ff0000" : "#33a02c";})
-         .attr("class", "country-dot") // Assign a class for styling
-         .attr("cx", function(d) { return lineChartXScale(d.year) })
-         .attr("cy", function(d) { return lineChartYScale(d.amount) })
-         .attr("r", circleRadius);
+    // Altera o status
+     if(status == 2 || status == 3){
+        filteredCountryConflicts = countriesConflicts[selectedCountry.id].slice(from,to);
+        lineChartSVG.selectAll(".country-line")
+           .datum(filteredCountryConflicts)
+           .transition().duration(500)
+           .attr("d", countryLine);
 
-      countryDot.on("mouseover", function(d) {
-            console.log(d)
-           // this.attr('class', 'focus')
-         });
-         // .on("mouseout", function() {  })
-         // .on("mousemove", mousemove);
+        lineChartSVG.selectAll(".country-dot").remove();
+        var countryDot = lineChartSVG.selectAll(".country-dot")
+           .data(filteredCountryConflicts)
+           .enter().append("circle");
+        countryDot
+           .transition().duration(500)
+           .style("fill", function(){ return status == 2 ? "#ff0000" : "#33a02c";})
+           .attr("class", "country-dot")
+           .attr("cx", function(d) { return lineChartXScale(d.year) })
+           .attr("cy", function(d) { return lineChartYScale(d.amount) })
+           .attr("r", circleRadius);
+
+        countryDot.on("mouseover", function(d) {
+              console.log(d)
+           });
+
+     }
+   }
+   else if(parseInt(from) > parseInt(to)){
+     alert("Data inicial deve ser menor que data final");
+
+     document.getElementById("from").style.border = "2px solid red";
+     document.getElementById("to").style.border = "2px solid red";
+   }
+   else if(from < 1501){
+     alert("Data inicial deve ser maior que 1501");
+     console.log(from)
+     document.getElementById("from").style.border = "2px solid red";
+    document.getElementById("to").style.border = "1px solid #ced4da ";
+   }
+   else if(to > 2018){
+     alert("Data final deve ser menor que 2018");
+
+     document.getElementById("to").style.border = "2px solid red";
+    document.getElementById("from").style.border = "1px solid #ced4da ";
    }
 }
 
@@ -852,21 +872,19 @@ function updateMap(d){
 
          var countryDot = lineChartSVG.selectAll(".country-dot")
             .data(selectedCountryConflicts)
-            .enter().append("circle"); // Uses the enter().append() method
+            .enter().append("circle");
          countryDot
             .transition().duration(500)
             .style("fill", "#ff0000")
-            .attr("class", "country-dot") // Assign a class for styling
+            .attr("class", "country-dot")
             .attr("cx", function(d) { return lineChartXScale(d.year) })
             .attr("cy", function(d) { return lineChartYScale(d.amount) })
             .attr("r", circleRadius);
 
          countryDot.on("mouseover", function(d) {
                console.log(d)
-           // this.attr('class', 'focus')
          });
-            // .on("mouseout", function() {  })
-            // .on("mousemove", mousemove);
+
 
       }
    }else{
@@ -926,21 +944,18 @@ function updateMap(d){
          lineChartSVG.selectAll(".country-dot").remove();
          var countryDot = lineChartSVG.selectAll(".country-dot")
             .data(selectedCountryConflicts)
-            .enter().append("circle"); // Uses the enter().append() method
+            .enter().append("circle");
          countryDot
             .transition().duration(500)
             .style("fill", "#33a02c")
-            .attr("class", "country-dot") // Assign a class for styling
+            .attr("class", "country-dot")
             .attr("cx", function(d) { return lineChartXScale(d.year) })
             .attr("cy", function(d) { return lineChartYScale(d.amount) })
             .attr("r", circleRadius);
 
          countryDot.on("mouseover", function(d) {
                console.log(d)
-               // this.attr('class', 'focus')
             });
-            // .on("mouseout", function() {  })
-            // .on("mousemove", mousemove);
       }
    }
 

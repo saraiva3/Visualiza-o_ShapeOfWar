@@ -1,13 +1,13 @@
 
 
 var edges, conflicts = [], conflictsByYear = [], csv;
-
+// Leitura e preparação dos dados
 d3.csv("data/edges.csv").then(function(data){
 
    edges = d3.nest()
    .key(function(d) { return d.conflict.trim();}).sortKeys(d3.ascending)
-   .entries(data.filter(function(d){ return d.relation === "-";}));   // desconsidera votos do 2º turno
-   // console.log(votes);
+   .entries(data.filter(function(d){ return d.relation === "-";}));
+
 
    countriesConflicts = {};
    edges.forEach(function(conflict){
@@ -40,7 +40,7 @@ d3.csv("data/edges.csv").then(function(data){
    for(i = 0; i <= currentYear - startYear; i++){
       conflictsByYear.push({year:startYear+i,conflicts:0});
    }
-   // conflictsByYear[1500] = 1;
+
 
    conflicts.forEach(function(conflict){
       start = conflict.start;
