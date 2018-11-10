@@ -113,8 +113,23 @@ var countryXScale = d3.scaleLinear()
 var countryYScale = d3.scaleLinear()
   .range([lineChartInnerHeight, 0]); // output
 
+// 1. Add the SVG to the page and employ #2
+var lineChartSVG = d3.select(".line-chart")
+  .attr("width", lineChartWidth)
+  .attr("height", lineChartHeight)
+  .append("g")
+  .attr("transform", "translate(" + margin.left + "," + margin.top/2 + ")");
+
+var lineChartXAxis, lineChartYAxis;
+var circleRadius = 3;
 var edges, conflicts = [], conflictsByYear = [], countriesConflicts = {};
-var line, countryLine;
+var line, countryLine, from, to;
+var filteredConflicts;
+var filteredCountryConflicts;
+
+var startYear = 1500;
+var currentYear = 2018;
+var duration = [];
 
 /* ------- SÉRIE TEMPORAL  ------- */
 
@@ -156,10 +171,6 @@ function ready(data) {
 
    /* ------ PROCESSAMENTO DE DADOS ------ */
 
-   var startYear = 1501;
-   var currentYear = 2018;
-   var duration = [];
-
    // monta o vetor com o número de inimizades de cada país
    data[1].forEach(function(d) { enemiesCount[d.id] = +d.amount; });
 
@@ -179,12 +190,12 @@ function ready(data) {
          }
       });
       countriesConflicts[d.id] = [];
-      for(var i = 1500; i <= 2018; i++){
+      for(var i = startYear; i <= currentYear; i++){
         countriesConflicts[d.id].push({year:i, amount:0});
       }
    });
    countriesConflicts['0'] = [];
-   for(var i = 1500; i <= 2018; i++){
+   for(var i = startYear; i <= currentYear; i++){
      countriesConflicts['0'].push({year:i, amount:0});
    }
 
@@ -201,8 +212,7 @@ function ready(data) {
 
    edges = d3.nest()
    .key(function(d) { return d.conflict.trim();}).sortKeys(d3.ascending)
-   .entries(data[4].filter(function(d){ return d.relation === "-";}));   // desconsidera votos do 2º turno
-   // console.log(votes);
+   .entries(data[4].filter(function(d){ return (d.relation === "-" && d.start >= startYear && d.end <= currentYear);}));   // desconsidera votos do 2º turno
 
    edges.forEach(function(conflict){
      end = conflict.values[0].end.trim();
@@ -384,7 +394,7 @@ function ready(data) {
 
    /* ------ SÉRIE TEMPORAL ------ */
 
-   lineChartXScale.domain([1500, 2018]);
+   lineChartXScale.domain([startYear, currentYear]);
    lineChartYScale.domain([0, d3.max(conflictsByYear, function(d){ return +d.conflicts})]);
 
    // 7. d3's line generator
@@ -398,21 +408,14 @@ function ready(data) {
       .y(function(d) { return lineChartYScale(d.amount); }) // set the y values for the line generator
       .curve(d3.curveMonotoneX) // apply smoothing to the line
 
-   // 1. Add the SVG to the page and employ #2
-   var lineChartSVG = d3.select(".line-chart")
-      .attr("width", lineChartWidth)
-      .attr("height", lineChartHeight)
-      .append("g")
-      .attr("transform", "translate(" + margin.left + "," + 0 + ")");
-
    // 3. Call the x axis in a group tag
-   lineChartSVG.append("g")
+   lineChartXAxis = lineChartSVG.append("g")
       .attr("class", "x axis")
       .attr("transform", "translate(0," + lineChartInnerHeight + ")")
       .call(d3.axisBottom(lineChartXScale).ticks(10)); // Create an axis component with d3.axisBottom
 
    // 4. Call the y axis in a group tag
-   lineChartSVG.append("g")
+   lineChartYAxis = lineChartSVG.append("g")
       .attr("class", "y axis")
       .call(d3.axisLeft(lineChartYScale)); // Create an axis component with d3.axisLeft
 
@@ -429,19 +432,19 @@ function ready(data) {
       .style("display", "none");
 
    // 12. Appends a circle for each datapoint
-   // lineChartSVG.selectAll(".dot")
-   //     .data(conflictsByYear)
-   //   .enter().append("circle") // Uses the enter().append() method
-   //     .attr("class", "dot") // Assign a class for styling
-   //     .attr("cx", function(d) { return lineChartXScale(d.year) })
-   //     .attr("cy", function(d) { return lineChartYScale(d.conflicts) })
-   //     .attr("r", 3)
-   //       .on("mouseover", function(d) {
-   //   			console.log(d)
-   //         // this.attr('class', 'focus')
-   // 		})
-   //       .on("mouseout", function() {  })
-   //       .on("mousemove", mousemove);
+   lineChartSVG.selectAll(".dot")
+      .data(conflictsByYear)
+      .enter().append("circle") // Uses the enter().append() method
+         .attr("class", "dot") // Assign a class for styling
+         .attr("cx", function(d) { return lineChartXScale(d.year) })
+         .attr("cy", function(d) { return lineChartYScale(d.conflicts) })
+         .attr("r", circleRadius)
+         .on("mouseover", function(d) {
+         		console.log(d)
+           // this.attr('class', 'focus')
+         })
+         .on("mouseout", function() {  })
+         .on("mousemove", mousemove);
 
    /* ------ SÉRIE TEMPORAL ------ */
 
@@ -588,6 +591,37 @@ function toEnemies(){
       .style("fill", "#e41a1c")
       .attr("width", function(d,i) { return xScale(chartData.enemies[i].amount); });
 
+   // d3.select(".country-line")
+   //    .style("stroke", "#e41a1c");
+
+   d3.select(".country-line")
+      .datum(countriesConflicts['0'].slice(from,to))
+      .transition().duration(500)
+      .attr("d", countryLine)
+      .transition().duration(500)
+      .style("display", "none")
+      .style("stroke", "#ff0000");
+
+   lineChartSVG.selectAll(".country-dot").remove();
+
+   // lineChartSVG.selectAll(".country-dot").remove();
+   //
+   // lineChartSVG.selectAll(".country-dot")
+   //    .data(countriesConflicts[selectedCountry.id])
+   //    .enter().append("circle") // Uses the enter().append() method
+   //    .transition().duration(500)
+   //    .style("fill", "#e41a1c")
+   //    .attr("class", "country-dot") // Assign a class for styling
+   //    .attr("cx", function(d) { return lineChartXScale(d.year) })
+   //    .attr("cy", function(d) { return lineChartYScale(d.conflicts) })
+   //    .attr("r", circleRadius)
+   //    .on("mouseover", function(d) {
+   //          console.log(d)
+   //      // this.attr('class', 'focus')
+   //   });
+   //    // .on("mouseout", function() {  })
+   //    // .on("mousemove", mousemove);
+
    status = 0;    // altera estado para 0
 }
 
@@ -647,7 +681,105 @@ function toAllies(){
       .style("fill", "#33a02c")
       .attr("width", function(d,i) { return xScale(chartData.allies[i].amount); });
 
+   d3.select(".country-line")
+      .datum(countriesConflicts['0'].slice(from,to))
+      .transition().duration(500)
+      .attr("d", countryLine)
+      .transition().duration(500)
+      .style("display", "none")
+      .style("stroke", "#33a02c");
+
+   lineChartSVG.selectAll(".country-dot").remove();
+
+   // lineChartSVG.selectAll(".country-dot")
+   //    .data(filteredCountryConflicts)
+   //    .enter().append("circle") // Uses the enter().append() method
+   //    .transition().duration(500)
+   //    .style("fill", "#33a02c")
+   //    .attr("class", "country-dot") // Assign a class for styling
+   //    .attr("cx", function(d) { return lineChartXScale(d.year) })
+   //    .attr("cy", function(d) { return lineChartYScale(d.conflicts) })
+   //    .attr("r", circleRadius)
+   //    .on("mouseover", function(d) {
+   //          console.log(d)
+   //      // this.attr('class', 'focus')
+   //    });
+   //    // .on("mouseout", function() {  })
+   //    // .on("mousemove", mousemove);
+
    status = 1;    // altera estado para 1
+}
+
+// Restaura escala e posicionamento padrão da visualização
+function updateLineChart(){
+
+   from = d3.select("#from").property("value") - startYear;
+   to = d3.select("#to").property("value") - startYear+1;
+
+   filteredConflicts = conflictsByYear.slice(from,to);
+
+   lineChartXScale.domain([d3.select("#from").property("value"), d3.select("#to").property("value")]);
+   lineChartYScale.domain([0, d3.max(filteredConflicts, function(d){ return +d.conflicts})]);
+
+   // 3. Call the x axis in a group tag
+   lineChartXAxis
+      .transition().duration(500)
+      .call(d3.axisBottom(lineChartXScale).ticks(10)); // Create an axis component with d3.axisBottom
+
+   // 4. Call the y axis in a group tag
+   lineChartYAxis
+      .transition().duration(500)
+      .call(d3.axisLeft(lineChartYScale)); // Create an axis component with d3.axisLeft
+
+   lineChartSVG.selectAll(".line")
+      .datum(filteredConflicts) // 10. Binds data to the line
+      .transition().duration(500)
+      .attr("d", line); // 11. Calls the line generator
+
+   lineChartSVG.selectAll(".dot").remove();
+
+   var countryDot = lineChartSVG.selectAll(".dot")
+      .data(filteredConflicts)
+      .enter().append("circle"); // Uses the enter().append() method
+   countryDot
+      .transition().duration(500)
+      .attr("class", "dot") // Assign a class for styling
+      .attr("cx", function(d) { return lineChartXScale(d.year) })
+      .attr("cy", function(d) { return lineChartYScale(d.conflicts) })
+      .attr("r", circleRadius)
+   countryDot.on("mouseover", function(d) {
+         console.log(d)
+         // this.attr('class', 'focus')
+      });
+      // .on("mouseout", function() {  })
+      // .on("mousemove", mousemove);
+
+   if(status == 2 || status == 3){
+      filteredCountryConflicts = countriesConflicts[selectedCountry.id].slice(from,to);
+      lineChartSVG.selectAll(".country-line")
+         .datum(filteredCountryConflicts)
+         .transition().duration(500)
+         .attr("d", countryLine);
+
+      lineChartSVG.selectAll(".country-dot").remove();
+      var countryDot = lineChartSVG.selectAll(".country-dot")
+         .data(filteredCountryConflicts)
+         .enter().append("circle"); // Uses the enter().append() method
+      countryDot
+         .transition().duration(500)
+         .style("fill", function(){ return status == 2 ? "#ff0000" : "#33a02c";})
+         .attr("class", "country-dot") // Assign a class for styling
+         .attr("cx", function(d) { return lineChartXScale(d.year) })
+         .attr("cy", function(d) { return lineChartYScale(d.amount) })
+         .attr("r", circleRadius);
+
+      countryDot.on("mouseover", function(d) {
+            console.log(d)
+           // this.attr('class', 'focus')
+         });
+         // .on("mouseout", function() {  })
+         // .on("mousemove", mousemove);
+   }
 }
 
 // Restaura escala e posicionamento padrão da visualização
@@ -707,11 +839,35 @@ function updateMap(d){
          d3.select(".title h3")  // atualiza título da visualização com o nome do país selecionado
             .html("Conflicts faced by " + selectedCountry.name + " since 1500");
 
+         var selectedCountryConflicts = countriesConflicts[selectedCountry.id].slice(from,to);
+
          d3.select(".country-line")
-            .datum(countriesConflicts[selectedCountry.id])
+            .datum(selectedCountryConflicts)
             .style("display", "inline")
             .transition().duration(500)
+            .style("stroke", "#ff0000")
             .attr("d", countryLine);
+
+         lineChartSVG.selectAll(".country-dot").remove();
+
+         var countryDot = lineChartSVG.selectAll(".country-dot")
+            .data(selectedCountryConflicts)
+            .enter().append("circle"); // Uses the enter().append() method
+         countryDot
+            .transition().duration(500)
+            .style("fill", "#ff0000")
+            .attr("class", "country-dot") // Assign a class for styling
+            .attr("cx", function(d) { return lineChartXScale(d.year) })
+            .attr("cy", function(d) { return lineChartYScale(d.amount) })
+            .attr("r", circleRadius);
+
+         countryDot.on("mouseover", function(d) {
+               console.log(d)
+           // this.attr('class', 'focus')
+         });
+            // .on("mouseout", function() {  })
+            // .on("mousemove", mousemove);
+
       }
    }else{
       // se o país já estiver selecionado, retorna o estado da visualização para "1"
@@ -757,6 +913,34 @@ function updateMap(d){
 
          d3.select(".title h3")     // atualiza título da visualização com o nome do país selecionado
             .html("Alliances formed by " + selectedCountry.name + " since 1500");
+
+         var selectedCountryConflicts = countriesConflicts[selectedCountry.id].slice(from,to);
+
+         d3.select(".country-line")
+            .datum(selectedCountryConflicts)
+            .style("display", "inline")
+            .transition().duration(500)
+            .style("stroke", "#33a02c")
+            .attr("d", countryLine);
+
+         lineChartSVG.selectAll(".country-dot").remove();
+         var countryDot = lineChartSVG.selectAll(".country-dot")
+            .data(selectedCountryConflicts)
+            .enter().append("circle"); // Uses the enter().append() method
+         countryDot
+            .transition().duration(500)
+            .style("fill", "#33a02c")
+            .attr("class", "country-dot") // Assign a class for styling
+            .attr("cx", function(d) { return lineChartXScale(d.year) })
+            .attr("cy", function(d) { return lineChartYScale(d.amount) })
+            .attr("r", circleRadius);
+
+         countryDot.on("mouseover", function(d) {
+               console.log(d)
+               // this.attr('class', 'focus')
+            });
+            // .on("mouseout", function() {  })
+            // .on("mousemove", mousemove);
       }
    }
 
@@ -844,67 +1028,3 @@ function chartMouseMove(d,i){
          break;
    }
 }
-// //Ordenação ascending
-// function ascending() {
-//   var x0 = yScale.domain(chartData.sort(this.checked
-//     ? function(a, b) { return +b.enemies - a.enemies; }
-//     : function(a, b) { return d3.ascending(a.country, b.country); })
-//     .map(function(d) {   return d.country; }))
-//     .copy();
-//
-//     chartSVG.selectAll(".bar")
-//     .sort(function(a, b) { return x0(a.country) - x0(b.country); });
-//
-//     // Efeito de transicao
-//     var transition = chartG.transition().duration(750),
-//     delay = function(d, i) { return i * 50; };
-//
-//     transition.selectAll(".bar")
-//     .delay(delay)
-//     .attr("y", function(d) { return x0(d.country); });
-//     transition.select(".y.axis")
-//     .call(yAxis)
-//     .selectAll("g")
-//     .delay(delay);
-//
-//     //Remove as labels e recoloca eles
-//     d3.selectAll("#valueLabel").remove();
-//
-//     bars.enter().append('text')
-//     .data(chartData)
-//     .attr("id","valueLabel")
-//     .attr({'x':function(d) { return xScale(d[xColumn])+15; },'y':function(d,i){ return yScale(d[yColumn])+17; }})
-//     .text(function(d){ return d.enemies;}).style({'fill':'#000','font-size':'15px'});
-//
-//   }
-//
-//   //Ordenação descending
-  // function descending() {
-  //   var x0 = yScale.domain(chartData.sort(this.checked
-  //     ? function(a, b) { return a.enemies -  b.enemies ; }
-  //     : function(a, b) { return d3.descending(a.country, b.country); })
-  //     .map(function(d) { return d.country; }))
-  //     .copy();
-  //
-  //     chartSVG.selectAll(".bar")
-  //     .sort(function(a, b) { return x0(a.country) - x0(b.country); });
-  //
-  //     var transition = chartG.transition().duration(750),
-  //     delay = function(d, i) { return i * 50; };
-  //     transition.selectAll(".bar")
-  //     .delay(delay)
-  //     .attr("y", function(d) { return x0(d.country); });
-  //
-  //     transition.select(".y.axis")
-  //     .call(yAxis)
-  //     .selectAll("g")
-  //     .delay(delay);
-  //
-  //     // d3.selectAll("#valueLabel").remove();
-  //
-  //     // d3.selectAll(".bar")
-  //     // .data(chartData).enter()
-  //     // // .attr("id","valueLabel")
-  //     // .attr({'x':function(d) { return xScale(d[xColumn])+15; },'y':function(d,i){ return yScale(d[yColumn])+17; }})
-  //     // .text(function(d){ return d.enemies;}).style({'fill':'#000','font-size':'15px'});
-  //   }

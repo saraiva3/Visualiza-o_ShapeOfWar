@@ -173,13 +173,13 @@ g {
 .line {
     fill: none;
     stroke: #ffab00;
-    stroke-width: 1.3;
+    stroke-width: 2;
 }
 
 .country-line {
     fill: none;
     stroke: #ff0000;
-    stroke-width: 1.3;
+    stroke-width: 2;
 }
 
 .overlay {
@@ -190,10 +190,15 @@ g {
 /* Style the dots by assigning a fill and stroke */
 .dot {
     fill: #ffab00;
-    stroke: #fff;
+    stroke: #2166ac;
 }
 
-  .focus circle {
+.country-dot {
+    fill: #e41a1c;
+    stroke: #2166ac;
+}
+
+/* .focus circle {
   fill: none;
   stroke: steelblue;
-}
+} */
