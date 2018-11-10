@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<style type="text/css">
+/* 13. Basic Styling with CSS */
+
+
+
+</style>
+<!-- Body tag is where we will append our SVG and SVG objects-->
+<body>
+</body>
+
+<!-- Load in the d3 library -->
+<script src="https://d3js.org/d3.v5.min.js"></script>
+<script>
+
+// 2. Use the margin convention practice
+var margin = {top: 50, right: 50, bottom: 50, left: 50}
+  , width = 481 // Use the window's width
+  , height = 275; // Use the window's height
+
+// The number of datapoints
+var n = 21;
+
+// 5. X scale will use the index of our data
+var xScale = d3.scaleLinear()
+    .range([0, width]); // output
+
+// 6. Y scale will use the randomly generate number
+var yScale = d3.scaleLinear()
+    .range([height, 0]); // output
+
+// 5. X scale will use the index of our data
+var countryXScale = d3.scaleLinear()
+  .range([0, width]); // output
+
+// 6. Y scale will use the randomly generate number
+var countryYScale = d3.scaleLinear()
+  .range([height, 0]); // output
+
+ // define promise para que a função para gerar o mapa só seja executada após a leitura dos arquivos
+ var promises = [];
+ // promises.push(d3.json('data/world_countries.json'));
+ // promises.push(d3.csv('data/totalEnemies.csv'));      // contem número de inimizades de cada país
+ // promises.push(d3.csv('data/totalAllies.csv'));       // contem número de alianças de cada paísel
+ promises.push(d3.csv('data/nodes.csv'));               // nós do grafo
+ promises.push(d3.csv('data/edges.csv'));        // grafo contendo relação entre países em cada conflito
+
+var edges, conflicts = [], conflictsByYear = [], countriesConflicts = {};
+
+ // executa a função "ready" após leitura dos arquivos
+ Promise.all(promises)
+    .then(ready)
+    .catch(function(error){
+      throw error;
+    });
+
+ // gera o mapa e seus elementos
+ function ready(data) {
+
+    edges = d3.nest()
+   .key(function(d) { return d.conflict.trim();}).sortKeys(d3.ascending)
+   .entries(data[1].filter(function(d){ return d.relation === "-";}));   // desconsidera votos do 2º turno
+   // console.log(votes);
+
+   data[0].forEach(function(d){
+      countriesConflicts[d.id] = [];
+      for(var i = 1500; i <= 2018; i++){
+         countriesConflicts[d.id].push({year:i, amount:0});
+      }
+   });
+
+   edges.forEach(function(conflict){
+      end = conflict.values[0].end.trim();
+      if(end === "Ongoing"){
+         conflicts.push({source:conflict.values[0].source_id , target:conflict.values[0].target_id, conflict:conflict.key, start:+conflict.values[0].start, end:end});
+      }else{
+         conflicts.push({source:conflict.values[0].source_id , target:conflict.values[0].target_id, conflict:conflict.key, start:+conflict.values[0].start, end:+end});
+      }
+   });
+
+   startYear = 1501;
+   currentYear = 2018;
+
+   duration = []
+
+   conflicts.forEach(function(d) {
+      if(d.end === "Ongoing"){
+         duration.push({conflict:d.conflict, duration: currentYear - d.start});
+      }else{
+         duration.push({conflict:d.conflict, duration: d.end - d.start});
+      }
+   });
+   duration.sort(function(x, y){ return +x.duration < +y.duration ? 1 : -1;});
+   // console.log(duration);
+   var i;
+
+   for(i = 0; i <= currentYear - startYear; i++){
+      conflictsByYear.push({year:startYear+i,conflicts:0});
+   }
+   // conflictsByYear[1500] = 1;
+
+   conflicts.forEach(function(conflict){
+      start = conflict.start;
+      if(conflict.end == "Ongoing"){
+         while(start <= currentYear){
+            countriesConflicts[conflict.source][start-startYear].amount++;
+            countriesConflicts[conflict.target][start-startYear].amount++;
+            conflictsByYear[start-startYear].conflicts++;
+            start++;
+         }
+      }else{
+         while(start <= conflict.end){
+            countriesConflicts[conflict.source][start-startYear].amount++;
+            countriesConflicts[conflict.target][start-startYear].amount++;
+            conflictsByYear[start-startYear].conflicts++;
+            start++;
+         }
+      }
+   });
+
+   console.log(countriesConflicts['BRA']);
+
+   xScale.domain([1500, 2018]);
+   yScale.domain([0, d3.max(conflictsByYear, function(d){ return +d.conflicts})]);
+
+   // countryXScale.domain([1500, 2018]);
+   // countryYScale.domain([0, d3.max(countriesConflicts['BRA'], function(d){ return +d.amount})]);
+
+    // 7. d3's line generator
+    var line = d3.line()
+        .x(function(d) { return xScale(d.year); }) // set the x values for the line generator
+        .y(function(d) { return yScale(d.conflicts); }) // set the y values for the line generator
+        .curve(d3.curveMonotoneX) // apply smoothing to the line
+
+        var line1 = d3.line()
+           .x(function(d) { return xScale(d.year); }) // set the x values for the line generator
+           .y(function(d) { return yScale(d.amount); }) // set the y values for the line generator
+           .curve(d3.curveMonotoneX) // apply smoothing to the line
+
+    // 1. Add the SVG to the page and employ #2
+    var svg = d3.select("body").append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+      .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    // 3. Call the x axis in a group tag
+    svg.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height + ")")
+        .call(d3.axisBottom(xScale).ticks(10)); // Create an axis component with d3.axisBottom
+
+    // 4. Call the y axis in a group tag
+    svg.append("g")
+        .attr("class", "y axis")
+        .call(d3.axisLeft(yScale)); // Create an axis component with d3.axisLeft
+
+    // 9. Append the path, bind the data, and call the line generator
+    svg.append("path")
+        .datum(conflictsByYear) // 10. Binds data to the line
+        .attr("class", "line") // Assign a class for styling
+        .attr("d", line); // 11. Calls the line generator
+
+        svg.append("path")
+           .datum(countriesConflicts['BRA']) // 10. Binds data to the line
+           .attr("class", "line1") // Assign a class for styling
+           .attr("d", line1); // 11. Calls the line generator
+
+    // 12. Appends a circle for each datapoint
+    // svg.selectAll(".dot")
+    //     .data(conflictsByYear)
+    //   .enter().append("circle") // Uses the enter().append() method
+    //     .attr("class", "dot") // Assign a class for styling
+    //     .attr("cx", function(d) { return xScale(d.year) })
+    //     .attr("cy", function(d) { return yScale(d.conflicts) })
+    //     .attr("r", 3)
+    //       .on("mouseover", function(d) {
+    //   			console.log(d)
+    //         // this.attr('class', 'focus')
+    // 		})
+    //       .on("mouseout", function() {  })
+    //       .on("mousemove", mousemove);
+    //
+    //   var focus = svg.append("g")
+    //       .attr("class", "focus")
+    //       .style("display", "none");
+    //
+    //   focus.append("circle")
+    //       .attr("r", 4.5);
+    //
+    //   focus.append("text")
+    //       .attr("x", 9)
+    //       .attr("dy", ".35em");
+    //
+    //   svg.append("rect")
+    //       .attr("class", "overlay")
+    //       .attr("width", width)
+    //       .attr("height", height)
+    //       .on("mouseover", function() { focus.style("display", null); })
+    //       .on("mouseout", function() { focus.style("display", "none"); })
+    //       .on("mousemove", mousemove);
+    //
+    //   function mousemove() {
+    //     var x0 = x.invert(d3.mouse(this)[0]),
+    //         i = bisectDate(data, x0, 1),
+    //         d0 = data[i - 1],
+    //         d1 = data[i],
+    //         d = x0 - d0.date > d1.date - x0 ? d1 : d0;
+    //     focus.attr("transform", "translate(" + x(d.date) + "," + y(d.close) + ")");
+    //     focus.select("text").text(d);
+    //   }
+}
+</script>

@@ -1,6 +1,8 @@
+/* ------- MAPA ------- */
+
 // define margens e tamanho da tela
 var margin = {top: 50, right: 50, bottom: 50, left: 50},
-            width = 1012,
+            width = d3.select(".map-div").node().getBoundingClientRect().width,
             height = 600 - margin.top - margin.bottom;
 
 // seleciona o SVG e define sua dimensão
@@ -21,7 +23,7 @@ var tooltip = d3.select("body")
 
 // define a projeção do mapa
 var projection = d3.geoEquirectangular()
-   .scale(158.5)
+   .scale(width*.155)
    .translate([width / 2, 250])
 
 // define path para desenhar o mapa
@@ -36,15 +38,22 @@ var zoom = d3.zoom()
 });
 svg.call(zoom);
 
-var xAxisLabelText = "Unique enemies";
-var xAxisLabelOffset = 75;
+// define valores dos ticks das legendas pros estados 0 e 1 da visualização
+var enemiesTickValues = [0,20,40,60,80,100,120,140,160,180,200,212];
+var alliesTickValues = [0,30,60,90,120,150,180,210,240,270,300,327];
 
-var innerWidth  = 506 - margin.left*1.5;
-var innerHeight = 275 - margin.top;
+/* ------- MAPA ------- */
+
+/* ------- GRÁFICO DE BARRAS  ------- */
+
+var chartWidth = d3.select(".chart-div").node().getBoundingClientRect().width - margin.left/2;
+var chartHeight = d3.select(".chart-div").node().getBoundingClientRect().height - margin.top;
+var innerWidth  = chartWidth - margin.left*1.5;
+var innerHeight = chartHeight - margin.top*1.5;
 
 var chartSVG = d3.select(".chart")
-   .attr("width",  506)
-   .attr("height", 275);
+   .attr("width",  chartWidth)
+   .attr("height", chartHeight);
 
 var chartTooltip = d3.select("body")
    .append("div")
@@ -52,19 +61,19 @@ var chartTooltip = d3.select("body")
    .style("display", "none");
 
 var chartG = chartSVG.append("g")
-   .attr("transform", "translate(" + (margin.left) + "," + margin.top/2 + ")")
+   .attr("transform", "translate(" + (margin.left+10) + "," + 0 + ")")
    .attr('class', "chart");
 
 var xAxisG = chartG.append("g")
    .attr("class", "x axis")
    .attr("transform", "translate(0," + innerHeight + ")")
 
-var xAxisLabel = xAxisG.append("text")
-   .style("text-anchor", "middle")
-   .attr("x", innerWidth / 2)
-   .attr("y", xAxisLabelOffset)
-   .attr("class", "label")
-   .text(xAxisLabelText);
+// var xAxisLabel = xAxisG.append("text")
+//    .style("text-anchor", "middle")
+//    .attr("x", innerWidth / 2)
+//    .attr("y", xAxisLabelOffset)
+//    .attr("class", "label")
+//    .text(xAxisLabelText);
 
 var yAxisG = chartG.append("g")
    .attr("class", "y axis");
@@ -77,6 +86,38 @@ var xAxis = d3.axisBottom().scale(xScale)
    .tickFormat(d3.format("~s"));
 
 var yAxis;
+
+/* ------- GRÁFICO DE BARRAS  ------- */
+
+/* ------- SÉRIE TEMPORAL  ------- */
+
+var lineChartWidth = d3.select(".line-chart-div").node().getBoundingClientRect().width - margin.left;
+var lineChartHeight = 450;
+
+var lineChartInnerWidth  = lineChartWidth - margin.left - margin.right;
+var lineChartInnerHeight = lineChartHeight - margin.top;
+
+// 5. X scale will use the index of our data
+var lineChartXScale = d3.scaleLinear()
+    .range([0, lineChartInnerWidth]); // output
+
+// 6. Y scale will use the randomly generate number
+var lineChartYScale = d3.scaleLinear()
+    .range([lineChartInnerHeight, 0]); // output
+
+// 5. X scale will use the index of our data
+var countryXScale = d3.scaleLinear()
+  .range([0, lineChartInnerWidth]); // output
+
+// 6. Y scale will use the randomly generate number
+var countryYScale = d3.scaleLinear()
+  .range([lineChartInnerHeight, 0]); // output
+
+var edges, conflicts = [], conflictsByYear = [], countriesConflicts = {};
+var line, countryLine;
+
+/* ------- SÉRIE TEMPORAL  ------- */
+
 /* mantém controle do estado atual da visualização {
    0: inimigos em geral
    1: alianças em geral
@@ -84,10 +125,6 @@ var yAxis;
    3: alianças de país selecionado
 }*/
 var status = 0;
-
-// define valores dos ticks das legendas pros estados 0 e 1 da visualização
-var enemiesTickValues = [0,20,40,60,80,100,120,140,160,180,200,212];
-var alliesTickValues = [0,30,60,90,120,150,180,210,240,270,300,327];
 
 var selectedCountry = {};                // mantem controle do país selecionado pelo usuário
 
@@ -97,7 +134,7 @@ var enemiesByCountry = {};          // número de inimizades que cada país teve
 var alliesByCountry = {};           // número de alianças que cada país formou com os demais
 var countries = {};
 
-var chartData = {};
+var chartData = {}
 
 // define promise para que a função para gerar o mapa só seja executada após a leitura dos arquivos
 var promises = [];
@@ -114,8 +151,14 @@ Promise.all(promises)
     throw error;
    });
 
-// gera o mapa e seus elementos
+// gera as visualizações
 function ready(data) {
+
+   /* ------ PROCESSAMENTO DE DADOS ------ */
+
+   var startYear = 1501;
+   var currentYear = 2018;
+   var duration = [];
 
    // monta o vetor com o número de inimizades de cada país
    data[1].forEach(function(d) { enemiesCount[d.id] = +d.amount; });
@@ -135,7 +178,15 @@ function ready(data) {
             alliesByCountry[d.id][g.id] = 0;
          }
       });
+      countriesConflicts[d.id] = [];
+      for(var i = 1500; i <= 2018; i++){
+        countriesConflicts[d.id].push({year:i, amount:0});
+      }
    });
+   countriesConflicts['0'] = [];
+   for(var i = 1500; i <= 2018; i++){
+     countriesConflicts['0'].push({year:i, amount:0});
+   }
 
    // faz o somatório do número de alianças e inimizades de cada país "d"
    data[4].forEach(function(d){
@@ -147,6 +198,56 @@ function ready(data) {
          alliesByCountry[d.target_id][d.source_id]++;
       }
    });
+
+   edges = d3.nest()
+   .key(function(d) { return d.conflict.trim();}).sortKeys(d3.ascending)
+   .entries(data[4].filter(function(d){ return d.relation === "-";}));   // desconsidera votos do 2º turno
+   // console.log(votes);
+
+   edges.forEach(function(conflict){
+     end = conflict.values[0].end.trim();
+     if(end === "Ongoing"){
+        conflicts.push({source:conflict.values[0].source_id , target:conflict.values[0].target_id, conflict:conflict.key, start:+conflict.values[0].start, end:end});
+     }else{
+        conflicts.push({source:conflict.values[0].source_id , target:conflict.values[0].target_id, conflict:conflict.key, start:+conflict.values[0].start, end:+end});
+     }
+   });
+
+   conflicts.forEach(function(d) {
+     if(d.end === "Ongoing"){
+        duration.push({conflict:d.conflict, duration: currentYear - d.start});
+     }else{
+        duration.push({conflict:d.conflict, duration: d.end - d.start});
+     }
+   });
+   duration.sort(function(x, y){ return +x.duration < +y.duration ? 1 : -1;});
+
+   for(var i = 0; i <= currentYear - startYear; i++){
+     conflictsByYear.push({year:startYear+i,conflicts:0});
+   }
+
+   conflicts.forEach(function(conflict){
+     start = conflict.start;
+     if(conflict.end == "Ongoing"){
+        while(start <= currentYear){
+           countriesConflicts[conflict.source][start-startYear].amount++;
+           countriesConflicts[conflict.target][start-startYear].amount++;
+           conflictsByYear[start-startYear].conflicts++;
+           start++;
+        }
+     }else{
+        while(start <= conflict.end){
+           countriesConflicts[conflict.source][start-startYear].amount++;
+           countriesConflicts[conflict.target][start-startYear].amount++;
+           conflictsByYear[start-startYear].conflicts++;
+           start++;
+        }
+     }
+   });
+
+   /* ------ PROCESSAMENTO DE DADOS ------ */
+
+   /* ------ MAPA ------ */
 
    // desenha o mapa inicial (estado inicial = 0)
    g = svg.append("g")
@@ -170,8 +271,6 @@ function ready(data) {
       .on("mouseout", mouseOut)
       .on("mousemove", mouseMove)
       .on("click", updateMap);
-
-   /* ------- LEGENDA ------- */
 
    var legendHeight = 50;              // define altura da barra
 
@@ -244,10 +343,14 @@ function ready(data) {
       .style("text-anchor", "end")
       .text("axis title");
 
+   /* ------ MAPA ------ */
+
+   /* ------ GRÁFICO DE LINHAS ------ */
+
    yAxis = d3.axisLeft().scale(yScale);
 
-   chartData['enemies'] = data[1].sort(function(x,y){ return +x.amount < +y.amount ? 1 : -1; }).slice(0,15);
-   chartData['allies'] = data[2].sort(function(x,y){ return +x.amount < +y.amount ? 1 : -1; }).slice(0,15);
+   chartData['enemies'] = data[1].sort(function(x,y){ return +x.amount < +y.amount ? 1 : -1; }).slice(0,30);
+   chartData['allies'] = data[2].sort(function(x,y){ return +x.amount < +y.amount ? 1 : -1; }).slice(0,30);
 
    xScale.domain([0, d3.max(chartData.enemies, function (d){ return +d.amount; })]);
    yScale.domain(chartData.enemies.map(function (d){ return d.id; }));
@@ -276,6 +379,72 @@ function ready(data) {
          }
          chartTooltip.style("display", "none");
       });
+
+   /* ------ GRÁFICO DE LINHAS ------ */
+
+   /* ------ SÉRIE TEMPORAL ------ */
+
+   lineChartXScale.domain([1500, 2018]);
+   lineChartYScale.domain([0, d3.max(conflictsByYear, function(d){ return +d.conflicts})]);
+
+   // 7. d3's line generator
+   line = d3.line()
+      .x(function(d) { return lineChartXScale(d.year); }) // set the x values for the line generator
+      .y(function(d) { return lineChartYScale(d.conflicts); }) // set the y values for the line generator
+      .curve(d3.curveMonotoneX) // apply smoothing to the line
+
+   countryLine = d3.line()
+      .x(function(d) { return lineChartXScale(d.year); }) // set the x values for the line generator
+      .y(function(d) { return lineChartYScale(d.amount); }) // set the y values for the line generator
+      .curve(d3.curveMonotoneX) // apply smoothing to the line
+
+   // 1. Add the SVG to the page and employ #2
+   var lineChartSVG = d3.select(".line-chart")
+      .attr("width", lineChartWidth)
+      .attr("height", lineChartHeight)
+      .append("g")
+      .attr("transform", "translate(" + margin.left + "," + 0 + ")");
+
+   // 3. Call the x axis in a group tag
+   lineChartSVG.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + lineChartInnerHeight + ")")
+      .call(d3.axisBottom(lineChartXScale).ticks(10)); // Create an axis component with d3.axisBottom
+
+   // 4. Call the y axis in a group tag
+   lineChartSVG.append("g")
+      .attr("class", "y axis")
+      .call(d3.axisLeft(lineChartYScale)); // Create an axis component with d3.axisLeft
+
+   // 9. Append the path, bind the data, and call the line generator
+   lineChartSVG.append("path")
+      .datum(conflictsByYear) // 10. Binds data to the line
+      .attr("class", "line") // Assign a class for styling
+      .attr("d", line); // 11. Calls the line generator
+
+   lineChartSVG.append("path")
+      .datum(countriesConflicts['0'])
+      .attr("class", "country-line") // Assign a class for styling
+      .attr("d", countryLine)
+      .style("display", "none");
+
+   // 12. Appends a circle for each datapoint
+   // lineChartSVG.selectAll(".dot")
+   //     .data(conflictsByYear)
+   //   .enter().append("circle") // Uses the enter().append() method
+   //     .attr("class", "dot") // Assign a class for styling
+   //     .attr("cx", function(d) { return lineChartXScale(d.year) })
+   //     .attr("cy", function(d) { return lineChartYScale(d.conflicts) })
+   //     .attr("r", 3)
+   //       .on("mouseover", function(d) {
+   //   			console.log(d)
+   //         // this.attr('class', 'focus')
+   // 		})
+   //       .on("mouseout", function() {  })
+   //       .on("mousemove", mousemove);
+
+   /* ------ SÉRIE TEMPORAL ------ */
+
 }
 
 // mostra tooltip quando houver hover em um país
@@ -500,7 +669,7 @@ function updateMap(d){
          toEnemies();
       }else{
          max = myMax(enemiesByCountry[d.id]);   // calcula maior quantidade de inimizades que o país teve
-         array = getTopCountries(enemiesByCountry[d.id]).slice(0,15);
+         array = getTopCountries(enemiesByCountry[d.id]).slice(0,30);
 
          // colore os países
          d3.selectAll("g.countries path")
@@ -537,6 +706,12 @@ function updateMap(d){
 
          d3.select(".title h3")  // atualiza título da visualização com o nome do país selecionado
             .html("Conflicts faced by " + selectedCountry.name + " since 1500");
+
+         d3.select(".country-line")
+            .datum(countriesConflicts[selectedCountry.id])
+            .style("display", "inline")
+            .transition().duration(500)
+            .attr("d", countryLine);
       }
    }else{
       // se o país já estiver selecionado, retorna o estado da visualização para "1"
@@ -545,7 +720,7 @@ function updateMap(d){
          toAllies();
       }else{
          max = myMax(alliesByCountry[d.id]);    // calcula maior quantidade de alianças que o país teve
-         array = getTopCountries(alliesByCountry[d.id]).slice(0,15);
+         array = getTopCountries(alliesByCountry[d.id]).slice(0,30);
 
          // colore os países
          d3.selectAll("g.countries path")
