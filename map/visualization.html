@@ -54,20 +54,45 @@
                 <label onClick="toEnemies();" class="btn btn-sm btn-enemies my-focus active">
                   <input type="radio" name="options" id="option1" autocomplete="off" checked>Conflicts <i class="fas fa-thumbs-down"></i>
                 </label>
-                <label onClick="toAllies();" class="btn btn-sm btn-allies">
+                <label onClick="toAllies();" class="btn btn-sm btn-allies mr-sm-2">
                   <input type="radio" name="options" id="option2" autocomplete="off">Alliances <i class="fas fa-thumbs-up"></i>
                 </label>
               </div>
+              <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                 <label onClick="reset();" class="btn btn-reset btn-sm btn-dark">Reset <i class="fas fa-search-minus"></i></label>
+               </div>
            </div>
         </div>
         <div class="col">
-           <label onClick="reset();" class="btn btn-reset btn-sm btn-dark">Reset <i class="fas fa-search-minus"></i></label>
         </div>
       </div>
    </div>
+   <hr>
+
+   <!-- <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-8">
+           <div class="context-btn-group">
+              <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                <label onClick="toEnemies();" class="btn btn-sm btn-enemies my-focus active">
+                  <input type="radio" name="options" id="option1" autocomplete="off" checked>Conflicts <i class="fas fa-thumbs-down"></i>
+                </label>
+                <label onClick="toAllies();" class="btn btn-sm btn-allies mr-sm-2">
+                  <input type="radio" name="options" id="option2" autocomplete="off">Alliances <i class="fas fa-thumbs-up"></i>
+                </label>
+              </div>
+              <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                 <label onClick="reset();" class="btn btn-reset btn-sm btn-dark">Reset <i class="fas fa-search-minus"></i></label>
+               </div>
+           </div>
+        </div>
+        <div class="col-md-4">
+        </div>
+      </div>
+   </div> -->
 
    <div class="container-fluid">
-      <div class="row">
+      <div class="row h-75">
          <div class="col-md-8 map-div">
                <svg class="map"></svg>
                <div class="legend-container">
@@ -80,25 +105,29 @@
       </div>
    </div>
 
+   <div class="title">
+      <h3>Number of Wars over the years</h3>
+   </div>
+
    <div class="row">
-     <div class="col">
+     <div class="col-4">
      </div>
-     <div class="col">
-     </div>
-     <div class="col-6">
-        <form action="" class="form-inline align-items-center">
+     <div class="col-4 centered-form">
+        <form action="" class="form-inline">
             <div class="form-group">
                <label class="sr-only" for="inlineFormInputName2">From</label>
-               <input type="text" id="from" class="form-control mr-sm-2" placeholder="From">
+               <input type="text" id="from" class="form-control form-control-sm mr-sm-2" placeholder="From">
             </div>
             <div class="form-group">
                <label class="sr-only" for="inlineFormInputName2">To</label>
-               <input type="text" id="to" class="form-control mr-sm-2" placeholder="To">
+               <input type="text" id="to" class="form-control form-control-sm mr-sm-2" placeholder="To">
             </div>
             <div class="form-group">
-               <label onClick="updateLineChart();" class="btn btn-reset btn-md btn-dark">Filter <i class="fas fa-search-minus"></i></label>
+               <label onClick="updateLineChart();" class="btn btn-reset btn-sm btn-dark">Filter <i class="fas fa-search-minus"></i></label>
             </div>
          </form>
+     </div>
+     <div class="col-4">
      </div>
    </div>
 

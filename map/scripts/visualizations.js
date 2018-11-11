@@ -60,7 +60,7 @@ function ready(data) {
 
    edges = d3.nest()
    .key(function(d) { return d.conflict.trim();}).sortKeys(d3.ascending)
-   .entries(data[4].filter(function(d){ return (d.relation === "-" && d.start >= startYear && d.end <= currentYear);}));   // desconsidera votos do 2º turno
+   .entries(data[4].filter(function(d){ return (d.relation === "-" && d.start >= startYear && d.end <= currentYear);}));
 
    edges.forEach(function(conflict){
      end = conflict.values[0].end.trim();
@@ -81,7 +81,7 @@ function ready(data) {
    duration.sort(function(x, y){ return +x.duration < +y.duration ? 1 : -1;});
 
    for(var i = 0; i <= currentYear - startYear; i++){
-     conflictsByYear.push({year:startYear+i,conflicts:0});
+     conflictsByYear.push({year:startYear+i,amount:0});
    }
 
    conflicts.forEach(function(conflict){
@@ -97,7 +97,7 @@ function ready(data) {
         while(start <= conflict.end){
            countriesConflicts[conflict.source][start-startYear].amount++;
            countriesConflicts[conflict.target][start-startYear].amount++;
-           conflictsByYear[start-startYear].conflicts++;
+           conflictsByYear[start-startYear].amount++;
            start++;
         }
      }
@@ -211,12 +211,30 @@ function ready(data) {
    chartData['enemies'] = data[1].sort(function(x,y){ return +x.amount < +y.amount ? 1 : -1; }).slice(0,30);
    chartData['allies'] = data[2].sort(function(x,y){ return +x.amount < +y.amount ? 1 : -1; }).slice(0,30);
 
+   maxX = d3.max(chartData.enemies, function (d){ return +d.amount; });
    // escala X e Y
-   xScale.domain([0, d3.max(chartData.enemies, function (d){ return +d.amount; })]);
+   xScale.domain([0, maxX]);
    yScale.domain(chartData.enemies.map(function (d){ return d.id; }));
 
-   xAxisG.call(xAxis);
-   yAxisG.call(yAxis);
+   xAxisG.call(xAxis)
+      .append("text")
+         .attr("class", "axis-legend")
+         .attr("fill", "black")
+         .attr("transform", "rotate(0)")
+         .attr("x", xScale(maxX))
+         .attr("y", -4)
+         .style("text-anchor", "end")
+         .text("Amount");
+
+   yAxisG.call(yAxis)
+      .append("text")
+         .attr("class", "axis-legend")
+         .attr("fill", "black")
+         .attr("transform", "rotate(0)")
+         .attr("x", 3)
+         .attr("y", -4)
+         .style("text-anchor", "end")
+         .text("Countries");
 
    //Barra e tooltip
    var bars = chartG.selectAll(".bar")
@@ -245,12 +263,12 @@ function ready(data) {
    /* ------ SÉRIE TEMPORAL ------ */
 
    lineChartXScale.domain([startYear, currentYear]);
-   lineChartYScale.domain([0, d3.max(conflictsByYear, function(d){ return +d.conflicts})]);
+   lineChartYScale.domain([0, d3.max(conflictsByYear, function(d){ return +d.amount})]);
 
    // Gera as linhas da serie temporal
    line = d3.line()
       .x(function(d) { return lineChartXScale(d.year); })
-      .y(function(d) { return lineChartYScale(d.conflicts); })
+      .y(function(d) { return lineChartYScale(d.amount); })
       .curve(d3.curveMonotoneX)
 
    countryLine = d3.line()
@@ -262,12 +280,30 @@ function ready(data) {
    lineChartXAxis = lineChartSVG.append("g")
       .attr("class", "x axis")
       .attr("transform", "translate(0," + lineChartInnerHeight + ")")
-      .call(d3.axisBottom(lineChartXScale).ticks(10));
+   lineChartXAxis
+      .call(d3.axisBottom(lineChartXScale).ticks(10).tickFormat(d3.format("d")))
+      .append("text")
+         .attr("class", "axis-legend")
+         .attr("fill", "black")
+         .attr("transform", "rotate(0)")
+         .attr("x", lineChartXScale(currentYear) + 50)
+         .attr("y", 5)
+         .style("text-anchor", "end")
+         .text("Years");
 
    // linha Y
    lineChartYAxis = lineChartSVG.append("g")
-      .attr("class", "y axis")
-      .call(d3.axisLeft(lineChartYScale));
+      .attr("class", "y axis");
+   lineChartYAxis
+      .call(d3.axisLeft(lineChartYScale))
+      .append("text")
+         .attr("class", "axis-legend")
+         .attr("fill", "black")
+         .attr("transform", "rotate(0)")
+         .attr("x", -10)
+         .attr("y", -10)
+         .style("text-anchor", "end")
+         .text("Wars");
 
    // seta os dados para as linhas
    lineChartSVG.append("path")
@@ -287,11 +323,10 @@ function ready(data) {
       .enter().append("circle")
          .attr("class", "dot")
          .attr("cx", function(d) { return lineChartXScale(d.year) })
-         .attr("cy", function(d) { return lineChartYScale(d.conflicts) })
+         .attr("cy", function(d) { return lineChartYScale(d.amount) })
          .attr("r", circleRadius)
-         .on("mouseover", function(d) {
-         		console.log(d)
-         });
+         .on("mouseover", lineChartMouseOver)
+         .on("mouseout", lineChartMouseOut);
 
    /* ------ SÉRIE TEMPORAL ------ */
 

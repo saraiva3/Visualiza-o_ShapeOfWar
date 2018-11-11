@@ -15,7 +15,11 @@ img{
 }
 
 .x.axis text{
-  font: 8pt sans-serif;
+  font: 9pt sans-serif;
+}
+
+.y.axis text{
+  font: 9pt sans-serif;
 }
 
 .yAxis line, .yAxis path {
@@ -23,6 +27,18 @@ img{
   stroke: #000;
   stroke-width: 2;
   shape-rendering: crispEdges;
+}
+
+/* .axis-legend{
+   font: 8pt sans-serif;
+} */
+
+.centered-form{
+   display: flex;
+   flex-flow: column wrap;
+   align-items: center;
+   width: 100vw;
+   position: relative;
 }
 
 svg.map{
@@ -57,7 +73,7 @@ svg.map{
 
 .chart-tooltip{
    background: black;
-   border: 2px solid #ffffff;
+   border: 2px solid white;
    border-radius: 5px;
    color: #ffffff;
    font-size: 12px;
@@ -70,6 +86,22 @@ svg.map{
    width: 130px;
 }
 
+.linechart-tooltip{
+   background: #000000;
+   border: 2px solid grey;
+   border-radius: 5px;
+   color: #ffffff;
+   font-size: 12px;
+   font-weight: bold;
+   height: 40px;
+   opacity: .7;
+   pointer-events: none;
+   position: absolute;
+   text-align: center;
+   width: 100px;
+}
+
+
 .label{
    color: #000000;
    font-size: 1vw;
@@ -81,10 +113,6 @@ header {
 }
 
 .title{
-   text-align: center;
-}
-
-.context-btn-group{
    text-align: center;
 }
 
@@ -155,8 +183,18 @@ g {
    color: white;
 }
 
+.navbar { padding-top: 0.1rem; padding-bottom: 0.1rem; }
+
 .btn-allies.focus, .btn-allies:focus {
     box-shadow: 0 0 0 .2rem rgba(40,167,69,.5);
+}
+
+.context-btn-group{
+   text-align: center;
+}
+
+hr{
+   margin: 5px 0 5px 0;
 }
 
 .btn-allies.my-focus{

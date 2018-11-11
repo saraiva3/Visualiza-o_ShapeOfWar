@@ -221,94 +221,90 @@ function toAllies(){
    status = 1;    // altera estado para 1
 }
 
-// Restaura escala e posicionamento padrão da visualização
+// aplica filtro de período à série temporal
 function updateLineChart(){
 
-   from = d3.select("#from").property("value") ;
-   to = d3.select("#to").property("value") ;
+   from = d3.select("#from").property("value");
+   to = d3.select("#to").property("value");
 
    if (parseInt(to) > parseInt(from)  && to <= 2018 && from >= 1500){
-     document.getElementById("from").style.border = "1px solid #ced4da ";
-     document.getElementById("to").style.border = "1px solid #ced4da ";
-     from = from - startYear;
-     to = to - startYear+1;
-     filteredConflicts = conflictsByYear.slice(from ,to);
+      document.getElementById("from").style.border = "1px solid #ced4da ";
+      document.getElementById("to").style.border = "1px solid #ced4da ";
+      from = from - startYear;
+      to = to - startYear+1;
+      filteredConflicts = conflictsByYear.slice(from ,to);
 
-     lineChartXScale.domain([d3.select("#from").property("value"), d3.select("#to").property("value")]);
-     lineChartYScale.domain([0, d3.max(filteredConflicts, function(d){ return +d.conflicts})]);
+      lineChartXScale.domain([d3.select("#from").property("value"), d3.select("#to").property("value")]);
+      lineChartYScale.domain([0, d3.max(filteredConflicts, function(d){ return +d.amount})]);
 
-     //linha X
-     lineChartXAxis
+      //linha X
+      lineChartXAxis
         .transition().duration(500)
         .call(d3.axisBottom(lineChartXScale).ticks(10));
 
-     // linha Y
-     lineChartYAxis
+      // linha Y
+      lineChartYAxis
         .transition().duration(500)
         .call(d3.axisLeft(lineChartYScale));
 
-     lineChartSVG.selectAll(".line")
+      lineChartSVG.selectAll(".line")
         .datum(filteredConflicts)
         .transition().duration(500)
         .attr("d", line);
 
-     lineChartSVG.selectAll(".dot").remove();
+      lineChartSVG.selectAll(".dot").remove();
 
-     var countryDot = lineChartSVG.selectAll(".dot")
+      var countryDot = lineChartSVG.selectAll(".dot")
         .data(filteredConflicts)
         .enter().append("circle");
-     countryDot
+      countryDot
         .transition().duration(500)
         .attr("class", "dot")
         .attr("cx", function(d) { return lineChartXScale(d.year) })
-        .attr("cy", function(d) { return lineChartYScale(d.conflicts) })
+        .attr("cy", function(d) { return lineChartYScale(d.amount) })
         .attr("r", circleRadius)
-     countryDot.on("mouseover", function(d) {
-           console.log(d)
-        });
+      countryDot
+         .on("mouseover", lineChartMouseOver)
+         .on("mouseout", lineChartMouseOut);
 
-    // Altera o status
+    // se houve algum país selecionado
      if(status == 2 || status == 3){
-        filteredCountryConflicts = countriesConflicts[selectedCountry.id].slice(from,to);
-        lineChartSVG.selectAll(".country-line")
-           .datum(filteredCountryConflicts)
-           .transition().duration(500)
-           .attr("d", countryLine);
+         filteredCountryConflicts = countriesConflicts[selectedCountry.id].slice(from,to);
+         lineChartSVG.selectAll(".country-line")
+            .datum(filteredCountryConflicts)
+            .transition().duration(500)
+            .attr("d", countryLine);
 
-        lineChartSVG.selectAll(".country-dot").remove();
-        var countryDot = lineChartSVG.selectAll(".country-dot")
-           .data(filteredCountryConflicts)
-           .enter().append("circle");
-        countryDot
-           .transition().duration(500)
-           .style("fill", function(){ return status == 2 ? "#ff0000" : "#33a02c";})
-           .attr("class", "country-dot")
-           .attr("cx", function(d) { return lineChartXScale(d.year) })
-           .attr("cy", function(d) { return lineChartYScale(d.amount) })
-           .attr("r", circleRadius);
-
-        countryDot.on("mouseover", function(d) {
-              console.log(d)
-           });
-     }
+         lineChartSVG.selectAll(".country-dot").remove();
+         var countryDot = lineChartSVG.selectAll(".country-dot")
+            .data(filteredCountryConflicts)
+            .enter().append("circle");
+         countryDot
+            .transition().duration(500)
+            .style("fill", function(){ return status == 2 ? "#ff0000" : "#33a02c";})
+            .attr("class", "country-dot")
+            .attr("cx", function(d) { return lineChartXScale(d.year) })
+            .attr("cy", function(d) { return lineChartYScale(d.amount) })
+            .attr("r", circleRadius);
+         countryDot
+            .on("mouseover", lineChartMouseOver)
+            .on("mouseout", lineChartMouseOut);
+      }
    }
    else if(parseInt(from) > parseInt(to)){
-     alert("Data inicial deve ser menor que data final");
-
-     document.getElementById("from").style.border = "2px solid red";
-     document.getElementById("to").style.border = "2px solid red";
+      alert("Data inicial deve ser menor que data final");
+      document.getElementById("from").style.border = "2px solid red";
+      document.getElementById("to").style.border = "2px solid red";
    }
    else if(from < 1500){
-     alert("Data inicial deve ser maior que 1500");
-     console.log(from)
-     document.getElementById("from").style.border = "2px solid red";
-    document.getElementById("to").style.border = "1px solid #ced4da ";
+      alert("Data inicial deve ser maior que 1500");
+      document.getElementById("from").style.border = "2px solid red";
+      document.getElementById("to").style.border = "1px solid #ced4da ";
    }
    else if(to > 2018){
-     alert("Data final deve ser menor que 2018");
-
-     document.getElementById("to").style.border = "2px solid red";
-    document.getElementById("from").style.border = "1px solid #ced4da ";
+      alert("Data final deve ser menor que 2018");
+      document.getElementById("to").style.border = "2px solid red";
+      document.getElementById("from").style.border = "1px solid #ced4da ";
    }
 }
 
@@ -369,8 +365,12 @@ function updateMap(d){
          d3.select(".title h3")  // atualiza título da visualização com o nome do país selecionado
             .html("Conflicts faced by " + selectedCountry.name + " since 1500");
 
-         var selectedCountryConflicts = countriesConflicts[selectedCountry.id].slice(from,to);
-
+         var selectedCountryConflicts;
+         if(selectedCountry.id in countriesConflicts){
+            selectedCountryConflicts = countriesConflicts[selectedCountry.id].slice(from,to);
+         }else{
+            selectedCountryConflicts = countriesConflicts['0'].slice(from,to);
+         }
          d3.select(".country-line")
             .datum(selectedCountryConflicts)
             .style("display", "inline")
@@ -390,10 +390,9 @@ function updateMap(d){
             .attr("cx", function(d) { return lineChartXScale(d.year) })
             .attr("cy", function(d) { return lineChartYScale(d.amount) })
             .attr("r", circleRadius);
-
-         countryDot.on("mouseover", function(d) {
-               console.log(d)
-         });
+         countryDot
+            .on("mouseover", lineChartMouseOver)
+            .on("mouseout", lineChartMouseOut);
 
 
       }
@@ -442,7 +441,12 @@ function updateMap(d){
          d3.select(".title h3")     // atualiza título da visualização com o nome do país selecionado
             .html("Alliances formed by " + selectedCountry.name + " since 1500");
 
-         var selectedCountryConflicts = countriesConflicts[selectedCountry.id].slice(from,to);
+         var selectedCountryConflicts;
+         if(selectedCountry.id in countriesConflicts){
+            selectedCountryConflicts = countriesConflicts[selectedCountry.id].slice(from,to);
+         }else{
+            selectedCountryConflicts = countriesConflicts['0'].slice(from,to);
+         }
 
          d3.select(".country-line")
             .datum(selectedCountryConflicts)
@@ -463,9 +467,9 @@ function updateMap(d){
             .attr("cy", function(d) { return lineChartYScale(d.amount) })
             .attr("r", circleRadius);
 
-         countryDot.on("mouseover", function(d) {
-               console.log(d)
-            });
+         countryDot
+            .on("mouseover", lineChartMouseOver)
+            .on("mouseout", lineChartMouseOut);
       }
    }
 
@@ -552,4 +556,16 @@ function chartMouseMove(d,i){
          chartTooltip.html(countries[array[i].id] + "<br>" + "Total:" + array[i].amount + "<br>" );
          break;
    }
+}
+
+function lineChartMouseOver(d){
+   lineChartTooltip
+      .style("left", d3.event.pageX - 2 + "px")
+      .style("top", d3.event.pageY - 40 + "px")
+      .style("display", "inline")
+      .html("Year: " + d.year + "</br> Wars: " + d.amount);
+}
+
+function lineChartMouseOut(d){
+   lineChartTooltip.style("display", "none");
 }

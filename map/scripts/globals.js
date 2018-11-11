@@ -50,7 +50,7 @@ var alliesTickValues = [0,30,60,90,120,150,180,210,240,270,300,327];
 var chartWidth = d3.select(".chart-div").node().getBoundingClientRect().width - margin.left/2;
 var chartHeight = d3.select(".chart-div").node().getBoundingClientRect().height - margin.top;
 var innerWidth  = chartWidth - margin.left*1.5;
-var innerHeight = chartHeight - margin.top*1.5;
+var innerHeight = chartHeight - margin.top*2;
 
 var chartSVG = d3.select(".chart")
    .attr("width",  chartWidth)
@@ -62,7 +62,7 @@ var chartTooltip = d3.select("body")
    .style("display", "none");
 
 var chartG = chartSVG.append("g")
-   .attr("transform", "translate(" + (margin.left+10) + "," + 0 + ")")
+   .attr("transform", "translate(" + (margin.left+10) + "," + 15 + ")")
    .attr('class', "chart");
 
 var xAxisG = chartG.append("g")
@@ -96,14 +96,11 @@ var lineChartInnerHeight = lineChartHeight - margin.top;
 var lineChartXScale = d3.scaleLinear()
     .range([0, lineChartInnerWidth]);
 
-
 var lineChartYScale = d3.scaleLinear()
     .range([lineChartInnerHeight, 0]);
 
-
 var countryXScale = d3.scaleLinear()
   .range([0, lineChartInnerWidth]);
-
 
 var countryYScale = d3.scaleLinear()
   .range([lineChartInnerHeight, 0]); // output
@@ -114,6 +111,11 @@ var lineChartSVG = d3.select(".line-chart")
   .attr("height", lineChartHeight)
   .append("g")
   .attr("transform", "translate(" + margin.left + "," + margin.top/2 + ")");
+
+var lineChartTooltip = d3.select("body")
+  .append("div")
+  .attr("class", "linechart-tooltip")
+  .style("display", "none");
 
 var lineChartXAxis, lineChartYAxis;
 var circleRadius = 3;
