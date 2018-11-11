@@ -86,11 +86,11 @@ var yAxis;
 
 /* ------- SÉRIE TEMPORAL  ------- */
 
-var lineChartWidth = d3.select(".line-chart-div").node().getBoundingClientRect().width - margin.left;
+var lineChartWidth = d3.select(".line-chart-div").node().getBoundingClientRect().width - margin.left/2;
 var lineChartHeight = 450;
 
 var lineChartInnerWidth  = lineChartWidth - margin.left - margin.right;
-var lineChartInnerHeight = lineChartHeight - margin.top;
+var lineChartInnerHeight = lineChartHeight - margin.top - margin.bottom/2;
 
 // Escala X e Y do grafico da serie temporal
 var lineChartXScale = d3.scaleLinear()
@@ -110,7 +110,7 @@ var lineChartSVG = d3.select(".line-chart")
   .attr("width", lineChartWidth)
   .attr("height", lineChartHeight)
   .append("g")
-  .attr("transform", "translate(" + margin.left + "," + margin.top/2 + ")");
+  .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 var lineChartTooltip = d3.select("body")
   .append("div")
@@ -123,7 +123,6 @@ var edges, conflicts = [], conflictsByYear = [], countriesConflicts = {};
 var line, countryLine, from, to;
 var filteredConflicts;
 var filteredCountryConflicts;
-
 var startYear = 1500;
 var currentYear = 2018;
 var duration = [];

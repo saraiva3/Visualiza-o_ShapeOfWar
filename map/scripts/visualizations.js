@@ -105,6 +105,7 @@ function ready(data) {
 
    /* ------ PROCESSAMENTO DE DADOS ------ */
 
+
    /* ------ MAPA ------ */
 
    // desenha o mapa inicial (estado inicial = 0)
@@ -316,6 +317,38 @@ function ready(data) {
       .attr("class", "country-line")
       .attr("d", countryLine)
       .style("display", "none");
+
+   lineChartSVG
+      .append("rect")
+      .attr("class", "linechart-legend-rect")
+      .attr("width", 15).attr("height", 15)
+      .attr("rx", 2).attr("ry", 2)
+      .attr("y", -35)
+      .attr("x", width/2 + margin.left*2);
+
+   lineChartSVG
+      .append("text")
+         .attr("class", "linechart-legend-text")
+         .attr("transform", "rotate(0)")
+         .attr("y", -23)
+         .attr("x", width/2 + margin.left*2 + 20)
+         .text("Total");
+
+   lineChartSVG
+      .append("rect")
+      .attr("class", "linechart-legend-country-rect")
+      .attr("width", 15).attr("height", 15)
+      .attr("rx", 2).attr("ry", 2)
+      .attr("y", -35)
+      .attr("x", width/2 + margin.left*2 + 75);
+
+   lineChartSVG
+      .append("text")
+         .attr("class", "linechart-legend-country-text")
+         .attr("transform", "rotate(0)")
+         .attr("y", -23)
+         .attr("x", width/2 + margin.left*2 + 95)
+         .text("Selected Country");
 
    // Coloca circulos em cada ponto
    lineChartSVG.selectAll(".dot")

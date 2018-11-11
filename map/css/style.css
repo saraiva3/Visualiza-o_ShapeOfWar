@@ -216,7 +216,7 @@ hr{
 
 .country-line {
     fill: none;
-    stroke: #ff0000;
+    stroke: #2166ac;
     stroke-width: 2;
 }
 
@@ -228,12 +228,12 @@ hr{
 /* Style the dots by assigning a fill and stroke */
 .dot {
     fill: #ffab00;
-    stroke: #2166ac;
+    stroke: #000000;
 }
 
 .country-dot {
-    fill: #e41a1c;
-    stroke: #2166ac;
+    fill: #2166ac;
+    stroke: #000000;
 }
 
 /* .focus circle {
@@ -243,4 +243,26 @@ hr{
 
 .fas{
   margin-left: 5px;
+}
+
+.linechart-legend-rect{
+   fill: #ffab00;
+}
+
+.linechart-legend-country-rect{
+   fill: #2166ac;
+   opacity: .3;
+}
+
+.linechart-legend-text{
+   fill: #000000;
+   font: 10pt sans-serif;
+   text-anchor: start;
+}
+
+.linechart-legend-country-text{
+   fill: #000000;
+   font: 10pt sans-serif;
+   opacity: .3;
+   text-anchor: start;
 }
