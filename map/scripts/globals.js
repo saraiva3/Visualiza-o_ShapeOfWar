@@ -1,19 +1,27 @@
 /* ------- MAPA ------- */
 
 // define margens e tamanho da tela
-var margin = {top: 50, right: 50, bottom: 50, left: 50},
+var margin = {top: 25, right: 50, bottom: 25, left: 50},
             width = d3.select(".map-div").node().getBoundingClientRect().width,
-            height = 600 - margin.top - margin.bottom;
+            height = d3.select(".map-div").node().getBoundingClientRect().height + 100;
 
 // seleciona o SVG e define sua dimensão
 var svg = d3.select(".map")
    .attr("width", width)
-   .attr("height", height);
+   .attr("height", height)
+   .attr("transform", "translate(" + 0 + "," + 5 + ")");
+
+svg.append("rect")
+   .attr("width", width)
+   .attr("height", height)
+   .style("fill-opacity", 0)
+   .style("stroke", "black")
+   .style("stroke-width", 2);
 
 // define e cria o elemento "g" para o mapa
 var g = svg
    .append('g')
-   .attr('class', 'map');
+   .attr('class', 'map')
 
 // adiciona tooltip
 var tooltip = d3.select("body")
@@ -23,8 +31,8 @@ var tooltip = d3.select("body")
 
 // define a projeção do mapa
 var projection = d3.geoEquirectangular()
-   .scale(width*.155)
-   .translate([width / 2, 250])
+   .scale(width*.158)
+   .translate([width / 2, 240])
 
 // define path para desenhar o mapa
 var path = d3.geoPath().projection(projection);
@@ -42,15 +50,18 @@ svg.call(zoom);
 var enemiesTickValues = [0,20,40,60,80,100,120,140,160,180,200,212];
 var alliesTickValues = [0,30,60,90,120,150,180,210,240,270,300,327];
 
+var maxAllies = 327;
+var maxEnemies = 212;
+var max;
 /* ------- MAPA ------- */
 
 
 /* ------- GRÁFICO DE BARRAS  ------- */
 
 var chartWidth = d3.select(".chart-div").node().getBoundingClientRect().width - margin.left/2;
-var chartHeight = d3.select(".chart-div").node().getBoundingClientRect().height - margin.top;
+var chartHeight = height;
 var innerWidth  = chartWidth - margin.left*1.5;
-var innerHeight = chartHeight - margin.top*2;
+var innerHeight = chartHeight - margin.top - margin.bottom;
 
 var chartSVG = d3.select(".chart")
    .attr("width",  chartWidth)
@@ -67,7 +78,7 @@ var chartG = chartSVG.append("g")
 
 var xAxisG = chartG.append("g")
    .attr("class", "x axis")
-   .attr("transform", "translate(0," + innerHeight + ")")
+   .attr("transform", "translate(0," + innerHeight + ")");
 
 var yAxisG = chartG.append("g")
    .attr("class", "y axis");
@@ -86,11 +97,11 @@ var yAxis;
 
 /* ------- SÉRIE TEMPORAL  ------- */
 
-var lineChartWidth = d3.select(".line-chart-div").node().getBoundingClientRect().width - margin.left/2;
-var lineChartHeight = 450;
+var lineChartWidth = d3.select(".line-chart-div").node().getBoundingClientRect().width - margin.left;
+var lineChartHeight = 210;
 
 var lineChartInnerWidth  = lineChartWidth - margin.left - margin.right;
-var lineChartInnerHeight = lineChartHeight - margin.top - margin.bottom/2;
+var lineChartInnerHeight = lineChartHeight - margin.top - margin.bottom;
 
 // Escala X e Y do grafico da serie temporal
 var lineChartXScale = d3.scaleLinear()
@@ -110,7 +121,7 @@ var lineChartSVG = d3.select(".line-chart")
   .attr("width", lineChartWidth)
   .attr("height", lineChartHeight)
   .append("g")
-  .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+  .attr("transform", "translate(" + margin.left + "," + 5 + ")");
 
 var lineChartTooltip = d3.select("body")
   .append("div")
@@ -118,7 +129,7 @@ var lineChartTooltip = d3.select("body")
   .style("display", "none");
 
 var lineChartXAxis, lineChartYAxis;
-var circleRadius = 3;
+var circleRadius = 2;
 var edges, conflicts = [], conflictsByYear = [], countriesConflicts = {};
 var line, countryLine, from, to;
 var filteredConflicts;

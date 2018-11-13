@@ -22,11 +22,15 @@ img{
   font: 9pt sans-serif;
 }
 
-.yAxis line, .yAxis path {
+.colorXAxis line, .colorXAxis path {
   fill: none;
   stroke: #000;
-  stroke-width: 2;
+  stroke-width: 1.6;
   shape-rendering: crispEdges;
+}
+
+.colorXAxis text{
+   font: 9pt sans-serif;
 }
 
 /* .axis-legend{
@@ -124,9 +128,8 @@ g {
    text-align: center;
 }
 
-
 .bar{
-   fill: #e41a1c;
+   fill: #ffffff;
 }
 
 .grid line {
@@ -137,10 +140,6 @@ g {
 
 .grid path {
    stroke-width: 0;
-}
-
-.tick text {
-   font-size: 0.9vw;
 }
 
 .axis-label{
@@ -183,7 +182,12 @@ g {
    color: white;
 }
 
-.navbar { padding-top: 0.1rem; padding-bottom: 0.1rem; }
+.navbar {
+  padding-top: 0.2rem; /* 0px does not look good on small screens */
+  padding-bottom: 0.2rem;
+  font-size: 10pt;      /* Just because I am using big size font */
+  line-height: 1em;
+}
 
 .btn-allies.focus, .btn-allies:focus {
     box-shadow: 0 0 0 .2rem rgba(40,167,69,.5);
@@ -191,10 +195,11 @@ g {
 
 .context-btn-group{
    text-align: center;
+   padding-top: 3px;
 }
 
 hr{
-   margin: 5px 0 5px 0;
+   margin: 0px 0 5px 0;
 }
 
 .btn-allies.my-focus{
@@ -241,6 +246,10 @@ hr{
   stroke: steelblue;
 } */
 
+.chart-div{
+   padding-top: 5px;
+}
+
 .fas{
   margin-left: 5px;
 }
@@ -252,6 +261,10 @@ hr{
 .linechart-legend-country-rect{
    fill: #2166ac;
    opacity: .3;
+}
+
+body{
+   background-color: #fafafa;
 }
 
 .linechart-legend-text{

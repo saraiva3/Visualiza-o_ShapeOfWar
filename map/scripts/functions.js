@@ -8,7 +8,7 @@ function updateMap(d){
          selected.classed("selected", false);
          toEnemies();
       }else{
-         var max = myMax(enemiesByCountry[d.id]);   // calcula maior quantidade de inimizades que o país teve
+         max = myMax(enemiesByCountry[d.id]);   // calcula maior quantidade de inimizades que o país teve
          var array = getTopCountries(enemiesByCountry[d.id]).slice(0,30);
 
          // colore os países
@@ -44,10 +44,11 @@ function updateMap(d){
          status = 2;                                           // altera o estado para "2"
          selectedCountry = {name:d.properties.name, id:d.id};  // armazena id do país selecionado
 
-         d3.select(".title h3")  // atualiza título da visualização com o nome do país selecionado
-            .html("Conflicts faced by " + selectedCountry.name + " since 1500");
+         d3.select(".title a")  // atualiza título da visualização com o nome do país selecionado
+            .text("Conflicts faced by " + selectedCountry.name + " since 1500");
 
          updateBarChart(max, array);
+         updateLineChart();
       }
    }else{
       // se o país já estiver selecionado, retorna o estado da visualização para "1"
@@ -55,8 +56,8 @@ function updateMap(d){
          selected.classed("selected", false);
          toAllies();
       }else{
-         var max = myMax(alliesByCountry[d.id]);    // calcula maior quantidade de alianças que o país teve
-         var array = getTopCountries(alliesByCountry[d.id]).slice(0,30);
+         max = myMax(alliesByCountry[d.id]);    // calcula maior quantidade de alianças que o país teve
+         var array = getTopCountries(alliesByCountry[d.id]);
 
          // colore os países
          d3.selectAll("g.countries path")
@@ -91,13 +92,13 @@ function updateMap(d){
          status = 3;                                           // altera o estado para "3"
          selectedCountry = {name:d.properties.name, id:d.id};  // armazena id do país selecionado
 
-         d3.select(".title h3")     // atualiza título da visualização com o nome do país selecionado
-            .html("Alliances formed by " + selectedCountry.name + " since 1500");
+         d3.select(".title a")     // atualiza título da visualização com o nome do país selecionado
+            .text("Alliances formed by " + selectedCountry.name + " since 1500");
 
          updateBarChart(max, array);
+         updateLineChart();
       }
    }
-   updateLineChart();
 }
 
 // altera o estado do sistema para "0"
@@ -137,7 +138,7 @@ function toEnemies(){
    selectedCountry = {};   // reseta a seleção do país selecionado
 
    // altera título da visualização
-   d3.select(".title h3").html("Number of conflicts faced by each country since 1500");
+   d3.select(".title a").text("Number of conflicts faced by each country since 1500");
 
    // atualiza classe dos botões para realçar o botão selecionado
    d3.select(".btn-enemies").classed("my-focus", true);
@@ -150,14 +151,30 @@ function toEnemies(){
       .transition()
       .duration(500)
       .call(xAxis);
-   d3.selectAll(".bar")
+
+   yScale.domain(chartData.enemies.map(function (d){ return d.id; }));
+   var newYAxis = d3.axisLeft().scale(yScale);
+   yAxisG.transition().duration(500)
+      .call(newYAxis);
+
+   // chartG.selectAll(".bar").remove();
+
+   chartG.selectAll(".bar")
       .data(chartData.enemies)
-      .transition()
-      .duration(500)
-      .style("fill", "#e41a1c")
-      .attr("width", function(d,i) { return xScale(chartData.enemies[i].amount); });
+      // .enter().append("rect")
+      // .attr("class", "bar")
+      // .on("mousemove", chartMouseMove)
+      // .on("mouseout", barChartMouseOut)
+      .transition().duration(500)
+      .style("fill", function(d,i){ return d3.interpolateReds(chartData.enemies[i].amount/maxEnemies);})
+      .attr("width", function(d,i) { return xScale(chartData.enemies[i].amount); })
+      .attr("height", yScale.bandwidth())
+      .attr("x", 1)
+      .attr("y", function(d) { return yScale(d.id) });
 
    status = 0;    // altera estado para 0
+
+   updateLineChart();
 }
 
 // altera o estado do sistema para "1"
@@ -196,7 +213,7 @@ function toAllies(){
    selectedCountry = {};   // reseta a seleção do país selecionado
 
    // altera título da visualização
-   d3.select(".title h3").html("Number of alliances formed by each country since 1500");
+   d3.select(".title a").text("Number of alliances formed by each country since 1500");
 
    // atualiza classe dos botões para realçar o botão selecionado
    d3.select(".btn-enemies").classed("my-focus", false);
@@ -204,19 +221,36 @@ function toAllies(){
 
    var max = myMax(alliesCount);
    xScale.domain([0, max]);
-   xAxis.ticks(Math.min(max,10))
+   xAxis.ticks(Math.min(max,10));
+
    xAxisG
       .transition()
       .duration(500)
       .call(xAxis);
-   d3.selectAll(".bar")
+
+   yScale.domain(chartData.allies.map(function (d){ return d.id; }));
+   var newYAxis = d3.axisLeft().scale(yScale);
+   yAxisG.transition().duration(500)
+      .call(newYAxis);
+
+   // chartG.selectAll(".bar").remove();
+
+   chartG.selectAll(".bar")
       .data(chartData.allies)
-      .transition()
-      .duration(500)
-      .style("fill", "#33a02c")
-      .attr("width", function(d,i) { return xScale(chartData.allies[i].amount); });
+      // .enter().append("rect")
+      // .attr("class", "bar")
+      // .on("mousemove", chartMouseMove)
+      // .on("mouseout", barChartMouseOut)
+      .transition().duration(500)
+      .style("fill", function(d,i){ return d3.interpolateGreens(chartData.allies[i].amount/maxAllies);})
+      .attr("width", function(d,i) { return xScale(chartData.allies[i].amount); })
+      .attr("height", yScale.bandwidth())
+      .attr("x", 1)
+      .attr("y", function(d) { return yScale(d.id) });
 
    status = 1;    // altera estado para 1
+
+   updateLineChart();
 }
 
 // atualiza o gráfico de linhas
@@ -284,24 +318,37 @@ function updateBarChart(max, array){
    xAxisG.transition().duration(500)
       .call(xAxis);
 
-   d3.selectAll(".bar").transition().duration(500)
+   var filteredArray = array.filter(function(d){ return d.amount > 0;}).slice(0,15);
+   yScale.domain(filteredArray.map(function (d){ return d.id; }));
+   var newYAxis = d3.axisLeft().scale(yScale);
+   yAxisG.transition().duration(500)
+      .call(newYAxis);
+
+   // chartG.selectAll(".bar").remove();
+
+   chartG.selectAll(".bar")
+      .data(array)
+      // .enter().append("rect")
+      // .attr("class", "bar")
+      // .on("mousemove", chartMouseMove)
+      // .on("mouseout", barChartMouseOut)
+      .transition().duration(500)
       .attr("width", function(d,i){
          if(i in array){
-            return xScale(array[i].amount);
+            return xScale(d.amount);
          }else{
             return xScale(0);
          }
       })
-      .style("fill", function(){
+      .attr("height", yScale.bandwidth())
+      .attr("x", 1)
+      .attr("y", function(d,i) { return yScale(d.id) })
+      .style("fill", function(d){
          if(status == 0 || status == 2){
-            return "#e41a1c";
+            return d3.interpolateReds(d.amount/max);
          }
-         return "#33a02c";
+         return d3.interpolateGreens(d.amount/max);
       });
-   yScale.domain(array.map(function (d){ return d.id; }));
-   var newYAxis = d3.axisLeft().scale(yScale);
-   yAxisG.transition().duration(500)
-      .call(newYAxis);
 }
 
 // aplica filtro de período à série temporal
@@ -323,12 +370,12 @@ function filterTimePeriod(){
       //linha X
       lineChartXAxis
         .transition().duration(500)
-        .call(d3.axisBottom(lineChartXScale).ticks(10));
+        .call(d3.axisBottom(lineChartXScale).ticks(10).tickFormat(d3.format("d")));
 
       // linha Y
       lineChartYAxis
         .transition().duration(500)
-        .call(d3.axisLeft(lineChartYScale));
+        .call(d3.axisLeft(lineChartYScale).ticks(5));
 
       lineChartSVG.selectAll(".line")
         .datum(filteredConflicts)
@@ -419,9 +466,7 @@ function myMax(array){
 function getTopCountries(array){
    var topCountries = [];
    for(var key in array){
-      if(array[key] > 0){
          topCountries.push({id:key, amount:array[key]});
-      }
    }
    return topCountries.sort(function(x, y){ return x.amount < y.amount ? 1 : -1;});
 }
@@ -530,16 +575,34 @@ function chartMouseMove(d,i){
 
       // mostra número de inimizades que o país selecionado teve com os países que o cursor passar por cima
       case '2':
-         array = getTopCountries(enemiesByCountry[selectedCountry.id]);
+         var array = getTopCountries(enemiesByCountry[selectedCountry.id]);
          chartTooltip.html(countries[array[i].id] + "<br>" + "Total:" + array[i].amount + "<br>" );
          break;
 
       // mostra número de alianças que o país selecionado teve com os países que o cursor passar por cima
       case '3':
-         array = getTopCountries(alliesByCountry[selectedCountry.id]);
+         var array = getTopCountries(alliesByCountry[selectedCountry.id]);
          chartTooltip.html(countries[array[i].id] + "<br>" + "Total:" + array[i].amount + "<br>" );
          break;
    }
+}
+
+function barChartMouseOut(d){
+   switch (status) {
+      case '0':
+         d3.select(this).style("fill", d3.interpolateReds(d.amount/maxEnemies));
+         break;
+      case '1':
+         d3.select(this).style("fill", d3.interpolateGreens(d.amount/maxAllies));
+         break;
+      case '2':
+         d3.select(this).style("fill", d3.interpolateReds(d.amount/max));
+         break;
+      case '3':
+         d3.select(this).style("fill", d3.interpolateGreens(d.amount/max));
+         break;
+   }
+   chartTooltip.style("display", "none");
 }
 
 function lineChartMouseOver(d){
@@ -552,4 +615,8 @@ function lineChartMouseOver(d){
 
 function lineChartMouseOut(d){
    lineChartTooltip.style("display", "none");
+}
+
+function showHelp(){
+   
 }

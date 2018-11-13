@@ -60,7 +60,7 @@ function ready(data) {
 
    edges = d3.nest()
    .key(function(d) { return d.conflict.trim();}).sortKeys(d3.ascending)
-   .entries(data[4].filter(function(d){ return (d.relation === "-" && d.start >= startYear && d.end <= currentYear);}));
+   .entries(data[4]);
 
    edges.forEach(function(conflict){
      end = conflict.values[0].end.trim();
@@ -70,7 +70,7 @@ function ready(data) {
         conflicts.push({source:conflict.values[0].source_id , target:conflict.values[0].target_id, conflict:conflict.key, start:+conflict.values[0].start, end:+end});
      }
    });
-
+   
    conflicts.forEach(function(d) {
      if(d.end === "Ongoing"){
         duration.push({conflict:d.conflict, duration: currentYear - d.start});
@@ -90,7 +90,7 @@ function ready(data) {
         while(start <= currentYear){
            countriesConflicts[conflict.source][start-startYear].amount++;
            countriesConflicts[conflict.target][start-startYear].amount++;
-           conflictsByYear[start-startYear].conflicts++;
+           conflictsByYear[start-startYear].amount++;
            start++;
         }
      }else{
@@ -117,7 +117,7 @@ function ready(data) {
       .attr("d", path)
       .style("fill", function(d){
          if(enemiesCount[d.id]){
-            return d3.interpolateReds(enemiesCount[d.id]/212); // colore os países
+            return d3.interpolateReds(enemiesCount[d.id]/maxEnemies); // colore os países
          }
          return "#ffffff";
       })
@@ -131,12 +131,12 @@ function ready(data) {
       .on("mousemove", mouseMove)
       .on("click", updateMap);
 
-   var legendHeight = 50;              // define altura da barra
+   var legendHeight = 10;              // define altura da barra
 
    // define svg para legenda e as suas dimensões
    var lSvg = d3.select(".legend")
       .attr("width", width)
-      .attr("height", 65); // altura do svg da legenda
+      .attr("height", 35); // altura do svg da legenda
 
    // define a legenda
    var legend = lSvg.append("defs")
@@ -176,31 +176,25 @@ function ready(data) {
    // gera a barra da legenda
    lSvg.append("rect")
       .attr("width", width - margin.left - margin.right)
-      .attr("height", legendHeight - 30)
+      .attr("height", legendHeight)
       .style("fill", "url(#gradient)")
-      .attr("transform", "translate(50,10)");
+      .attr("transform", "translate(50, 7)");
 
    // define a escala
-   var y = d3.scaleLinear()
+   var colorScale = d3.scaleLinear()
       .range([width - margin.left - margin.right, 0])
       .domain([212, 0]);
 
    // define eixo Y
-   var yAxis = d3.axisBottom()
-      .scale(y)
+   var colorXAxis = d3.axisBottom()
+      .scale(colorScale)
       .tickValues(enemiesTickValues);
 
    // adiciona os ticks da escala e sua numeração
    lSvg.append("g")
-      .attr("class", "yAxis")
-      .attr("transform", "translate(49,30)")
-      .call(yAxis)
-      .append("text")
-      .attr("transform", "rotate(-90)")
-      .attr("y", 0)
-      .attr("dy", ".71em")
-      .style("text-anchor", "end")
-      .text("axis title");
+      .attr("class", "colorXAxis")
+      .attr("transform", "translate(49, 17)")
+      .call(colorXAxis);
 
    /* ------ MAPA ------ */
 
@@ -209,8 +203,8 @@ function ready(data) {
    yAxis = d3.axisLeft().scale(yScale);
 
    // configuracao dos dados
-   chartData['enemies'] = data[1].sort(function(x,y){ return +x.amount < +y.amount ? 1 : -1; }).slice(0,30);
-   chartData['allies'] = data[2].sort(function(x,y){ return +x.amount < +y.amount ? 1 : -1; }).slice(0,30);
+   chartData['enemies'] = data[1].sort(function(x,y){ return +x.amount < +y.amount ? 1 : -1; }).slice(0,15);
+   chartData['allies'] = data[2].sort(function(x,y){ return +x.amount < +y.amount ? 1 : -1; }).slice(0,15);
 
    maxX = d3.max(chartData.enemies, function (d){ return +d.amount; });
    // escala X e Y
@@ -232,7 +226,7 @@ function ready(data) {
          .attr("class", "axis-legend")
          .attr("fill", "black")
          .attr("transform", "rotate(0)")
-         .attr("x", 3)
+         .attr("x", 10)
          .attr("y", -4)
          .style("text-anchor", "end")
          .text("Countries");
@@ -246,18 +240,12 @@ function ready(data) {
       .attr("y", function(d) { return yScale(d.id); })
       .attr("width", function(d) { return xScale(d.amount); })
       .attr("height", yScale.bandwidth())
+      .style("fill", function(d){ return d3.interpolateReds(d.amount/212);})
       .on("mouseover", function(){
          d3.select(this).style("fill", '#377eb8');
       })
       .on("mousemove", chartMouseMove)
-      .on("mouseout", function(){
-         if(status == 0 || status == 2){
-            d3.select(this).style("fill", '#e41a1c');
-         }else{
-            d3.select(this).style("fill", '#33a02c');
-         }
-         chartTooltip.style("display", "none");
-      });
+      .on("mouseout", barChartMouseOut);
 
    /* ------ GRÁFICO DE LINHAS ------ */
 
@@ -296,7 +284,7 @@ function ready(data) {
    lineChartYAxis = lineChartSVG.append("g")
       .attr("class", "y axis");
    lineChartYAxis
-      .call(d3.axisLeft(lineChartYScale))
+      .call(d3.axisLeft(lineChartYScale).ticks(5))
       .append("text")
          .attr("class", "axis-legend")
          .attr("fill", "black")
@@ -318,36 +306,39 @@ function ready(data) {
       .attr("d", countryLine)
       .style("display", "none");
 
-   lineChartSVG
+   var lineChartLegend = d3.select(".line-chart-legend")
+      .attr("height", 15);
+
+   lineChartLegend
       .append("rect")
       .attr("class", "linechart-legend-rect")
       .attr("width", 15).attr("height", 15)
       .attr("rx", 2).attr("ry", 2)
-      .attr("y", -35)
-      .attr("x", width/2 + margin.left*2);
+      .attr("y", 0)
+      .attr("x", 60);
 
-   lineChartSVG
+   lineChartLegend
       .append("text")
          .attr("class", "linechart-legend-text")
          .attr("transform", "rotate(0)")
-         .attr("y", -23)
-         .attr("x", width/2 + margin.left*2 + 20)
+         .attr("y", 13)
+         .attr("x", 80)
          .text("Total");
 
-   lineChartSVG
+   lineChartLegend
       .append("rect")
       .attr("class", "linechart-legend-country-rect")
       .attr("width", 15).attr("height", 15)
       .attr("rx", 2).attr("ry", 2)
-      .attr("y", -35)
-      .attr("x", width/2 + margin.left*2 + 75);
+      .attr("y", 0)
+      .attr("x", 125);
 
-   lineChartSVG
+   lineChartLegend
       .append("text")
          .attr("class", "linechart-legend-country-text")
          .attr("transform", "rotate(0)")
-         .attr("y", -23)
-         .attr("x", width/2 + margin.left*2 + 95)
+         .attr("y", 13)
+         .attr("x", 145)
          .text("Selected Country");
 
    // Coloca circulos em cada ponto

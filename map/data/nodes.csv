@@ -1,16 +1,15 @@
 id,country,timeset,continent
-160,Comoros,,Africa
-163,Bahrain,,Asia
-173,Malta,,Europe
-180,Barbados,,North America
-185,Samoa,,Oceania
-187,Saint Lucia,,North America
-188,Tonga,,Oceania
-190,Grenada,,North America
-193,Saint Vincent and the Grenadines,,North America
-196,Seychelles,,Africa
-197,Antigua and Barbuda,,North America
-211,San Marino,,Europe
+BHR,Bahrain,,Asia
+MAL,Malta,,Europe
+BAR,Barbados,,North America
+SAM,Samoa,,Oceania
+SLC,Saint Lucia,,North America
+TNG,Tonga,,Oceania
+GRN,Grenada,,North America
+SVG,Saint Vincent and the Grenadines,,North America
+SCL,Seychelles,,Africa
+ATB,Antigua and Barbuda,,North America
+SMA,San Marino,,Europe
 AFG,Afghanistan,,Asia
 AGO,Angola,,Africa
 ALB,Albania,,Europe
@@ -36,6 +35,7 @@ CAN,Canada,,North America
 CHE,Switzerland,,Europe
 CHL,Chile,,South America
 CHN,China,,Asia
+COM,Comoros,,Africa
 CMR,Cameroon,,Africa
 COD,Democratic Republic of the Congo,,Africa
 COG,Republic of the Congo,,Africa
@@ -146,7 +146,6 @@ TJK,Tajikistan,,Asia
 TKM,Turkmenistan,,Asia
 TLS,East Timor,,Asia
 TUN,Tunisia,,Africa
-TUR,Ottoman Empire,,Europe
 TUR,Turkey,,Asia
 TZA,Tanzania,,Africa
 UGA,Uganda,,Africa
@@ -155,8 +154,6 @@ URY,Uruguay,,South America
 USA,United States,,North America
 UZB,Uzbekistan,,Asia
 VEN,Venezuela,,South America
-VNM,North Vietnam,,Europe
-VNM,South Vietnam,,Europe
 VNM,Vietnam,,Asia
 VUT,Vanuatu,,Oceania
 YEM,Yemen,,Asia
