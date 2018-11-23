@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+    <title>TP2 - Visualização de Dados</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://d3js.org/d3.v3.min.js"></script>
+    <script src="c3/c3.min.js"></script>
+
+    <link href="c3/c3.css" rel="stylesheet">
+    <link rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+      crossorigin="anonymous">
+    <link href="css/geral.css" rel="stylesheet"></link>
+
+    <script type="text/javascript" src="data/NovoEdges.js"></script>
+
+</head>
+  <body>
+
+    <nav class="navbar navbar-dark bg-dark navbar-expand-lg navbar-light bg-light">
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link"
+                href="index.html">
+              Home
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link"
+                href="visualizacao1.html">
+              Visualization 1
+            </a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link"
+                href="visualizacao2.html">
+              Visualization 2
+              <span class="sr-only">
+                (current)
+              </span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link"
+                href="visualizacao3.html">
+              Visualization 3
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link"
+                href="visualizacao4.html">
+              Visualization 4
+            </a>
+          </li>
+        </ul>
+      </div>
+      <span class="navbar-text">
+        Data Visualization - Author: Amanda Fernandes Pereira
+      </span>
+    </nav>
+
+    <div class="container">
+      <div class="row" id="titulo">
+        <div class="col-md-1"></div>
+        <h2 class="col-md-9" id="titulo-ranking"></h2>
+      </div>
+      <div class="row">
+        <div id="visualizacao2" class="col-md-10"></div>
+        <div class="form-group col-md-2">
+          <div>
+            <label for="quantElementos">Number of conflicts</label>
+            <select class="form-control" id="quantElementos">
+              <option value="3">3</option>
+              <option value="5" selected>5</option>
+              <option value="10">10</option>
+              <option value="15">15</option>
+            </select>
+          </div>
+          <br>
+          <label for="radio-button"><b>Ranking of:</b></label>
+          <div id="radio-button">
+            <div>
+              <label>
+                <input type="radio"
+                  name="information-type"
+                  id="information-duration"
+                  value="conflict"
+                  checked>Duration
+              </label>
+            </div>
+            <div>
+              <label>
+                <input type="radio"
+                  name="information-type"
+                  id="information-country"
+                  value="countries">Number of countries
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script type="text/javascript" src="js/visualizacao2.js"></script>
+
+	</body>
+</html>

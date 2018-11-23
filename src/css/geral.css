@@ -1,0 +1,40 @@
+#index {
+  /*font-family: 'Indie Flower', cursive;*/
+  text-align: center;
+}
+
+#visualizacao1 {
+  height: 550px;
+}
+
+#visualizacao2 {
+  height: 550px;
+}
+
+#visualizacao3 {
+  height: 500px;
+}
+
+.form-check-input {
+  margin-left: 3px;
+}
+
+.form-check-label {
+  margin-left: 20px;
+}
+
+h2 {
+  text-align: center;
+}
+
+.c3-axis-y text {
+  font-size: 10px;
+}
+
+.c3-axis-x text {
+  font-size: 10px;
+}
+
+.c3-line {
+  stroke-width: 2px;
+}
