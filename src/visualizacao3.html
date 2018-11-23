@@ -14,8 +14,7 @@
       crossorigin="anonymous">
     <link href="css/geral.css" rel="stylesheet"></link>
 
-    <script type="text/javascript" src="data/sumAllAlies.js"></script>
-    <script type="text/javascript" src="data/sumAllEnemies.js"></script>
+    <script type="text/javascript" src="data/NovoEdges.js"></script>
 
 </head>
   <body>
@@ -33,22 +32,21 @@
             <a class="nav-link"
                 href="../map/visualization.html">
               Visualization 1
-
-            </a>
-          </li>
-          <li class="nav-item active">
-            <a class="nav-link"
-                href="visualizacao2.html">
-              Visualization 2
-              <span class="sr-only">
-                (current)
-              </span>
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link"
+                href="visualizacao2.html">
+              Visualization 2
+            </a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link"
                 href="visualizacao3.html">
               Visualization 3
+              <span class="sr-only">
+                (current)
+              </span>
             </a>
           </li>
         </ul>
@@ -59,52 +57,48 @@
     </nav>
 
     <div class="container">
-      <div class="row">
+      <div class="row" id="titulo">
         <div class="col-md-1"></div>
-        <h2 class="col-md-9">
-          <!-- Percentual de aliados e inimigos -->
-          <!-- Countries with more edges (involved in more conflicts) -->
-          Percentage of allies and enemies
-        </h2>
+        <h2 class="col-md-9" id="titulo-ranking"></h2>
       </div>
       <div class="row">
-        <div id="visualizacao1" class="col-md-10"></div>
-        <div class="col-md-2 form-group">
+        <div id="visualizacao2" class="col-md-10"></div>
+        <div class="form-group col-md-2">
           <div>
-            <input class="form-check-input" type="checkbox" id="checkboxEmpilhado" checked>
-            <label class="form-check-label" for="checkboxEmpilhado">
-              Stacked bars
-            </label>
-          </div>
-          <div>
-            <input class="form-check-input" type="checkbox" id="checkboxNormaliza" checked>
-            <label class="form-check-label" for="checkboxNormaliza">
-              Percentage of allies and enemies
-            </label>
-          </div>
-          <br>
-          <div>
-            <input id="search-input"
-              class="form-control"
-              type="text"
-              placeholder="Type the name of the country"
-              aria-label="Search">
-          </div>
-          <br>
-          <div>
-            <label for="quantElementos">Number of countries</label>
+            <label for="quantElementos">Number of conflicts</label>
             <select class="form-control" id="quantElementos">
               <option value="3">3</option>
-              <option value="5">5</option>
-              <option value="10" selected>10</option>
+              <option value="5" selected>5</option>
+              <option value="10">10</option>
               <option value="15">15</option>
             </select>
+          </div>
+          <br>
+          <label for="radio-button"><b>Ranking of:</b></label>
+          <div id="radio-button">
+            <div>
+              <label>
+                <input type="radio"
+                  name="information-type"
+                  id="information-duration"
+                  value="conflict"
+                  checked>Duration
+              </label>
+            </div>
+            <div>
+              <label>
+                <input type="radio"
+                  name="information-type"
+                  id="information-country"
+                  value="countries">Number of countries
+              </label>
+            </div>
           </div>
         </div>
       </div>
     </div>
 
-    <script type="text/javascript" src="js/visualizacao1.js"></script>
+    <script type="text/javascript" src="js/visualizacao2.js"></script>
 
 	</body>
 </html>

@@ -279,3 +279,9 @@ body{
    opacity: .3;
    text-anchor: start;
 }
+
+.modal-content {
+  width: 180%;
+  margin-left: -40%;
+  text-align: justify;
+}
