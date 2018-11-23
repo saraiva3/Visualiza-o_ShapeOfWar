@@ -38,11 +38,7 @@ img{
 } */
 
 .centered-form{
-   display: flex;
-   flex-flow: column wrap;
-   align-items: center;
-   width: 100vw;
-   position: relative;
+   padding-right: 35px;
 }
 
 svg.map{
@@ -117,6 +113,10 @@ header {
 }
 
 .title{
+   text-align: center;
+}
+
+.line-chart-title{
    text-align: center;
 }
 
@@ -195,7 +195,7 @@ g {
 
 .context-btn-group{
    text-align: center;
-   padding-top: 3px;
+   padding-bottom: 5px;
 }
 
 hr{
@@ -210,6 +210,17 @@ hr{
     color: #fff;
     background-color: #1e7e34;
     border-color: #1c7430;
+}
+
+.btn-xs {
+    padding: .25rem .4rem;
+    font-size: .875rem;
+    line-height: .5;
+    border-radius: .2rem;
+}
+
+.form-control-sm{
+   width: 100px !important;
 }
 
 /* Style the lines by removing the fill and applying a stroke */
