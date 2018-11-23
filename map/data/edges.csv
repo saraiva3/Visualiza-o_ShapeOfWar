@@ -1,38 +1,8 @@
 source,target,conflict,relation,start,end,source_id,target_id
-Croatia,Austria,Uprising in Krivošije,-,1869,1869,HRV,AUT
-Turkey,Armenia,Sasun rebellion,-,1894,1894,TUR,ARM
-United Kingdom,Iraq,Iraqi Revolt,-,1920,1920,GBR,IRQ
-Egypt,Iraq,Arab–Israeli War,+,1948,1949,EGY,IRQ
-Egypt,Israel,Arab–Israeli War,-,1948,1949,EGY,ISR
-Syria,Israel,Arab–Israeli War,-,1948,1949,SYR,ISR
-Iraq,Israel,Arab–Israeli War,-,1948,1949,IRQ,ISR
-Lebanon,Israel,Arab–Israeli War,-,1948,1949,LBN,ISR
-India,China,China-India border conflicts,-,1967,1967,IND,CHN
-Ethiopia,Somalia,Ethiopian–Somali Border War,-,1982,1982,ETH,SOM
-Syria,Israel,Lebanon WarSecurity Zone conflict,-,1982,2000,SYR,ISR
-Russia,Georgia,South Ossetia War,-,1991,1992,RUS,GEO
-Australia,Indonesia,East Timorese crisis,-,1999,2000,AUS,IDN
-East Timor,Indonesia,East Timorese crisis,-,1999,2000,TLS,IDN
-Sudan,Comoros,Invasion of Anjouan,+,2008,2008,SDN,CHE
-Sudan,Tanzania,Invasion of Anjouan,+,2008,2008,SDN,TZA
-Sudan,Senegal,Invasion of Anjouan,+,2008,2008,SDN,SEN
-Sudan,Libya,Invasion of Anjouan,+,2008,2008,SDN,LBY
-Libya,Tanzania,Invasion of Anjouan,+,2008,2008,LBY,TZA
-Libya,Comoros,Invasion of Anjouan,+,2008,2008,LBY,COM
-Libya,Senegal,Invasion of Anjouan,+,2008,2008,LBY,SEN
-Tanzania,Comoros,Invasion of Anjouan,+,2008,2008,TZA,COM
-Tanzania,Senegal,Invasion of Anjouan,+,2008,2008,TZA,SEN
-Senegal,Comoros,Invasion of Anjouan,+,2008,2008,SEN,COM
-France,Liberia,Ivorian crisis   Second Ivorian Civil War,-,2010,2011,FRA,LBR
-Armenia,Azerbaijan,Armenian–Azerbaijani clashes,-,2016,2016,ARM,AZE
-Afghanistan,Pakistan,Afghanistan–Pakistan border skirmish,-,2017,2017,AFG,PAK
-Iraq,Iran,Iraqi–Kurdish conflict,-,2017,2017,IRQ,IRN
-Iraq,Iran,Iraqi–Kurdish conflict,+,2017,2017,IRQ,IRN
-Iraq,Turkey,Iraqi–Kurdish conflict,-,2017,2017,IRQ,TUR
-Armenia,Azerbaijan,Armenian–Azerbaijani clashes,-,2018,2018,ARM,AZE
 United States,Brazil,Acre War,-,1899,1903,USA,BRA
 Brazil,Bolivia,Acre War,-,1899,1903,BRA,BOL
 Democratic Republic of the Congo,Uganda,ADF insurgency,-,1996,Ongoing,COD,UGA
+Afghanistan,Pakistan,Afghanistan–Pakistan border skirmish,-,2017,2017,AFG,PAK
 Mali,Burkina Faso,Agacher Strip War,-,1985,1985,MLI,BFA
 United States,Iran,Al-Qaeda insurgency in Yemen,+,1998,Ongoing,USA,IRN
 United States,Saudi Arabia,Al-Qaeda insurgency in Yemen,+,1998,Ongoing,USA,SAU
@@ -108,12 +78,19 @@ Russia,Germany,Angolan Civil War,+,1975,2002,RUS,DEU
 Portugal,India,Annexation of Dadra and Nagar Haveli,-,1954,1954,PRT,IND
 Turkey,Bulgaria,April Uprising,-,1876,1876,TUR,BGR
 Turkey,United Kingdom,Arab RevoltPart of World War I,-,1916,1918,TUR,GBR
+Egypt,Iraq,Arab–Israeli War,+,1948,1949,EGY,IRQ
+Egypt,Israel,Arab–Israeli War,-,1948,1949,EGY,ISR
+Syria,Israel,Arab–Israeli War,-,1948,1949,SYR,ISR
+Iraq,Israel,Arab–Israeli War,-,1948,1949,IRQ,ISR
+Lebanon,Israel,Arab–Israeli War,-,1948,1949,LBN,ISR
 Spain,Argentina,Argentine War of Independence,-,1810,1818,ESP,ARG
 Spain,Chile,Argentine War of Independence,-,1810,1818,ESP,CHL
 Russia,Azerbaijan,Armenian-Azerbaijani border conflict,-,1994,Ongoing,RUS,AZE
 Russia,Turkey,Armenian-Azerbaijani border conflict,-,1994,Ongoing,RUS,TUR
 Armenia,Azerbaijan,Armenian-Azerbaijani border conflict,-,1994,Ongoing,ARM,AZE
 Armenia,Turkey,Armenian-Azerbaijani border conflict,-,1994,Ongoing,ARM,TUR
+Armenia,Azerbaijan,Armenian–Azerbaijani clashes,-,2016,2016,ARM,AZE
+Armenia,Azerbaijan,Armenian–Azerbaijani clashes,-,2018,2018,ARM,AZE
 Turkey,Armenia,Armenian–Azerbaijani War,-,1918,1920,TUR,ARM
 Turkey,United Kingdom,Armenian–Azerbaijani War,-,1918,1920,TUR,GBR
 Russia,United Kingdom,Armenian–Azerbaijani War,-,1918,1920,RUS,GBR
@@ -253,6 +230,7 @@ Libya,Chad,Chadian Civil War (1965–79),-,1965,1979,LBY,TCD
 France,Libya,Chadian–Libyan conflict,-,1978,1987,FRA,LBY
 Spain,Argentina,Chilean War of Independence Part of the Spanish American wars of independence,-,1810,1826,ESP,ARG
 Spain,Chile,Chilean War of Independence Part of the Spanish American wars of independence,-,1810,1826,ESP,CHL
+India,China,China-India border conflicts,-,1967,1967,IND,CHN
 Spain,Bolivia,Chincha Islands War,-,1864,1866,ESP,BOL
 Spain,Chile,Chincha Islands War,-,1864,1866,ESP,CHL
 Spain,Peru,Chincha Islands War,-,1864,1866,ESP,PER
@@ -261,6 +239,48 @@ Peru,Chile,Chincha Islands War,+,1864,1866,PER,CHL
 Peru,Ecuador,Chincha Islands War,+,1864,1866,PER,ECU
 Chile,Ecuador,Chincha Islands War,+,1864,1866,CHL,ECU
 United States,Philippines,Civil conflict in the Philippines,+,1969,Ongoing,USA,PHL
+United States,North Korea,Civil conflict in the Philippines,-,1969,Ongoing,USA,PRK
+United States,China,Civil conflict in the Philippines,-,1969,Ongoing,USA,CHN
+United States,Libya,Civil conflict in the Philippines,-,1969,Ongoing,USA,LBY
+United States,Vietnam,Civil conflict in the Philippines,-,1969,Ongoing,USA,VNM
+Vietnam,Philippines,Civil conflict in the Philippines,-,1969,Ongoing,VNM,PHL
+China,Philippines,Civil conflict in the Philippines,-,1969,Ongoing,CHN,PHL
+Philippines,North Korea,Civil conflict in the Philippines,-,1969,Ongoing,PHL,PRK
+Philippines,Libya,Civil conflict in the Philippines,-,1969,Ongoing,PHL,LBY
+Norway,Iraq,Civil conflict in the Philippines,-,1969,Ongoing,NOR,IRQ
+Norway,Egypt,Civil conflict in the Philippines,-,1969,Ongoing,NOR,EGY
+Norway,Malaysia,Civil conflict in the Philippines,-,1969,Ongoing,NOR,MYS
+United States,Egypt,Civil conflict in the Philippines,-,1969,Ongoing,USA,EGY
+United States,Japan,Civil conflict in the Philippines,+,1969,Ongoing,USA,JPN
+United States,Australia,Civil conflict in the Philippines,+,1969,Ongoing,USA,AUS
+United States,Iraq,Civil conflict in the Philippines,-,1969,Ongoing,USA,IRQ
+United States,Philippines,Civil conflict in the Philippines,+,1969,Ongoing,USA,PHL
+United States,Indonesia,Civil conflict in the Philippines,+,1969,Ongoing,USA,IDN
+United States,Malaysia,Civil conflict in the Philippines,-,1969,Ongoing,USA,MYS
+United States,Malaysia,Civil conflict in the Philippines,+,1969,Ongoing,USA,MYS
+Egypt,Japan,Civil conflict in the Philippines,-,1969,Ongoing,EGY,JPN
+Egypt,Philippines,Civil conflict in the Philippines,-,1969,Ongoing,EGY,PHL
+Egypt,Malaysia,Civil conflict in the Philippines,-,1969,Ongoing,EGY,MYS
+Egypt,Indonesia,Civil conflict in the Philippines,-,1969,Ongoing,EGY,IDN
+Japan,Australia,Civil conflict in the Philippines,+,1969,Ongoing,JPN,AUS
+Japan,Philippines,Civil conflict in the Philippines,+,1969,Ongoing,JPN,PHL
+Japan,Iraq,Civil conflict in the Philippines,-,1969,Ongoing,JPN,IRQ
+Japan,Indonesia,Civil conflict in the Philippines,+,1969,Ongoing,JPN,IDN
+Japan,Malaysia,Civil conflict in the Philippines,-,1969,Ongoing,JPN,MYS
+Japan,Malaysia,Civil conflict in the Philippines,+,1969,Ongoing,JPN,MYS
+Australia,Iraq,Civil conflict in the Philippines,-,1969,Ongoing,AUS,IRQ
+Australia,Philippines,Civil conflict in the Philippines,+,1969,Ongoing,AUS,PHL
+Australia,Indonesia,Civil conflict in the Philippines,+,1969,Ongoing,AUS,IDN
+Australia,Malaysia,Civil conflict in the Philippines,-,1969,Ongoing,AUS,MYS
+Australia,Malaysia,Civil conflict in the Philippines,+,1969,Ongoing,AUS,MYS
+Iraq,Philippines,Civil conflict in the Philippines,-,1969,Ongoing,IRQ,PHL
+Iraq,Malaysia,Civil conflict in the Philippines,-,1969,Ongoing,IRQ,MYS
+Iraq,Indonesia,Civil conflict in the Philippines,-,1969,Ongoing,IRQ,IDN
+Philippines,Malaysia,Civil conflict in the Philippines,-,1969,Ongoing,PHL,MYS
+Philippines,Malaysia,Civil conflict in the Philippines,+,1969,Ongoing,PHL,MYS
+Philippines,Indonesia,Civil conflict in the Philippines,+,1969,Ongoing,PHL,IDN
+Indonesia,Malaysia,Civil conflict in the Philippines,-,1969,Ongoing,IDN,MYS
+Indonesia,Malaysia,Civil conflict in the Philippines,+,1969,Ongoing,IDN,MYS
 India,Afghanistan,Civil war in Afghanistan (1996–2001),-,1996,2001,IND,AFG
 India,Pakistan,Civil war in Afghanistan (1996–2001),-,1996,2001,IND,PAK
 United States,Canada,Civil war in Afghanistan (1996–2001),+,1996,2001,USA,CAN
@@ -530,8 +550,8 @@ Russia,Germany,Continuation War,-,1941,1944,RUS,DEU
 Russia,Finland,Continuation War,-,1941,1944,RUS,FIN
 Finland,Germany,Continuation War,+,1941,1944,FIN,DEU
 Italy,Greece,Corfu incident,-,1923,1923,ITA,GRC
-Turkey,Malta,Cretan War (1645–69),-,1645,1669,TUR,MAL
-Turkey,France,Cretan War (1645–69),-,1645,1669,TUR,FRA
+Turkey,Malta,Cretan War,-,1645,1669,TUR,MAL
+Turkey,France,Cretan War,-,1645,1669,TUR,FRA
 Turkey,Russia,Crimean campaigns,-,1687,1689,TUR,RUS
 Turkey,Bulgaria,Crimean War,-,1853,1856,TUR,BGR
 Turkey,Russia,Crimean War,-,1853,1856,TUR,RUS
@@ -557,6 +577,8 @@ Eritrea,Djibouti,Djiboutian–Eritrean border conflict,-,2008,2008,ERI,DJI
 United States,Dominica,Dominican Civil War,-,1965,1965,USA,DOM
 Spain,Dominica,Dominican Restoration War,-,1863,1865,ESP,DOM
 Haiti,Dominica,Dominican War of Independence,-,1843,1849,HTI,DOM
+Australia,Indonesia,East Timorese crisis,-,1999,2000,AUS,IDN
+East Timor,Indonesia,East Timorese crisis,-,1999,2000,TLS,IDN
 Colombia,Ecuador,Ecuadorian–Colombian War,-,1863,1863,COL,ECU
 Peru,Ecuador,Ecuadorian–Peruvian territorial dispute of 1857–60,-,1857,1860,PER,ECU
 Peru,Ecuador,Ecuadorian–Peruvian War,-,1941,1941,PER,ECU
@@ -585,6 +607,7 @@ Cuba,Russia,Ethiopian Civil War,+,1974,1991,CUB,RUS
 Cuba,North Korea,Ethiopian Civil War,+,1974,1991,CUB,PRK
 Russia,North Korea,Ethiopian Civil War,+,1974,1991,RUS,PRK
 Turkey,Ethiopia,Ethiopian–Adal war,-,1529,1543,TUR,ETH
+Ethiopia,Somalia,Ethiopian–Somali Border War,-,1982,1982,ETH,SOM
 United Kingdom,Argentina,Falklands War,-,1982,1982,GBR,ARG
 Portugal,France,Fantastic WarPart of the Seven Years' War,-,1762,1763,PRT,FRA
 Portugal,Spain,Fantastic WarPart of the Seven Years' War,-,1762,1763,PRT,ESP
@@ -812,14 +835,16 @@ United Kingdom,Indonesia,Indonesian National Revolution,-,1945,1949,GBR,IDN
 Sweden,Russia,Ingrian War,-,1610,1617,SWE,RUS
 United States,Vietnam,Insurgency in Laos,-,1975,Ongoing,USA,VNM
 United States,Laos,Insurgency in Laos,-,1975,Ongoing,USA,LAO
-United States,North Korea,Civil conflict in the Philippines,-,1969,Ongoing,USA,PRK
-United States,China,Civil conflict in the Philippines,-,1969,Ongoing,USA,CHN
-United States,Libya,Civil conflict in the Philippines,-,1969,Ongoing,USA,LBY
-United States,Vietnam,Civil conflict in the Philippines,-,1969,Ongoing,USA,VNM
-Vietnam,Philippines,Civil conflict in the Philippines,-,1969,Ongoing,VNM,PHL
-China,Philippines,Civil conflict in the Philippines,-,1969,Ongoing,CHN,PHL
-Philippines,North Korea,Civil conflict in the Philippines,-,1969,Ongoing,PHL,PRK
-Philippines,Libya,Civil conflict in the Philippines,-,1969,Ongoing,PHL,LBY
+Sudan,Comoros,Invasion of Anjouan,+,2008,2008,SDN,CHE
+Sudan,Tanzania,Invasion of Anjouan,+,2008,2008,SDN,TZA
+Sudan,Senegal,Invasion of Anjouan,+,2008,2008,SDN,SEN
+Sudan,Libya,Invasion of Anjouan,+,2008,2008,SDN,LBY
+Libya,Tanzania,Invasion of Anjouan,+,2008,2008,LBY,TZA
+Libya,Comoros,Invasion of Anjouan,+,2008,2008,LBY,COM
+Libya,Senegal,Invasion of Anjouan,+,2008,2008,LBY,SEN
+Tanzania,Comoros,Invasion of Anjouan,+,2008,2008,TZA,COM
+Tanzania,Senegal,Invasion of Anjouan,+,2008,2008,TZA,SEN
+Senegal,Comoros,Invasion of Anjouan,+,2008,2008,SEN,COM
 United States,Dominica,Invasion of Grenada,+,1983,1983,USA,DOM
 United States,Cuba,Invasion of Grenada,-,1983,1983,USA,CUB
 United States,Grenada,Invasion of Grenada,-,1983,1983,USA,GRN
@@ -902,6 +927,10 @@ United States,Iran,Iraqi Kurdish Civil War,-,1994,1997,USA,IRN
 United States,Turkey,Iraqi Kurdish Civil War,-,1994,1997,USA,TUR
 Iraq,Iran,Iraqi Kurdish Civil War,-,1994,1997,IRQ,IRN
 Iran,Turkey,Iraqi Kurdish Civil War,-,1994,1997,IRN,TUR
+United Kingdom,Iraq,Iraqi Revolt,-,1920,1920,GBR,IRQ
+Iraq,Iran,Iraqi–Kurdish conflict,-,2017,2017,IRQ,IRN
+Iraq,Iran,Iraqi–Kurdish conflict,+,2017,2017,IRQ,IRN
+Iraq,Turkey,Iraqi–Kurdish conflict,-,2017,2017,IRQ,TUR
 Russia,China,Islamic rebellion in Xinjiang (1937),-,1937,1937,RUS,CHN
 Russia,Iraq,Islamist insurgency in Mozambique,-,2017,Ongoing,RUS,IRQ
 Iraq,Mozambique,Islamist insurgency in Mozambique,-,2017,Ongoing,IRQ,MOZ
@@ -912,6 +941,7 @@ Spain,France,Italian War of 1536–38,-,1536,1538,ESP,FRA
 Turkey,Spain,Italian War of 1542–46,-,1542,1546,TUR,ESP
 Spain,France,Italian War of 1542–46,-,1542,1546,ESP,FRA
 Turkey,Italy,Italo-Turkish War,-,1911,1912,TUR,ITA
+France,Liberia,Ivorian crisis   Second Ivorian Civil War,-,2010,2011,FRA,LBR
 United Kingdom,Australia,Jandamarra Guerilla War,-,1894,1897,GBR,AUS
 Japan,China,January 28 Incident,-,1932,1932,JPN,CHN
 Lithuania,Russia,January Uprising,-,1863,1865,LTU,RUS
@@ -1278,6 +1308,7 @@ United States,Israel,Lebanese Civil War,+,1975,1990,USA,ISR
 Italy,Syria,Lebanese Civil War,-,1975,1990,ITA,SYR
 Syria,Israel,Lebanese Civil War,-,1975,1990,SYR,ISR
 Syria,Israel,Lebanese Civil War,+,1975,1990,SYR,ISR
+Syria,Israel,Lebanon WarSecurity Zone conflict,-,1982,2000,SYR,ISR
 Peru,Colombia,Leticia Incident,-,1932,1933,PER,COL
 Denmark,Spain,Libyan Civil War (2011),+,2011,2011,DNK,ESP
 Denmark,France,Libyan Civil War (2011),+,2011,2011,DNK,FRA
@@ -1447,46 +1478,12 @@ United Kingdom,New Zealand,Malayan Emergency,+,1948,1960,GBR,NZL
 Mauritania,Senegal,Mauritania–Senegal Border War,-,1989,1991,MRT,SEN
 France,United Kingdom,Merina conquest of Madagascar,-,1810,1817,FRA,GBR
 Mexico,United States,Mexican–American War,-,1846,1848,MEX,USA
+Egypt,Australia,Mexican–American War,-,1969,Ongoing,EGY,AUS
 Mexico,Guatemala,Mexico–Guatemala conflict,-,1958,1959,MEX,GTM
 Turkey,Montenegro,Montenegrin–Ottoman War (1852–53),-,1852,1853,TUR,MNE
 Turkey,Montenegro,Montenegrin–Ottoman War (1876–78)Part of the Great Eastern Crisis,-,1876,1878,TUR,MNE
 United Kingdom,Jamaica,Morant Bay rebellion,-,1865,1865,GBR,JAM
 Turkey,Malta,Morean WarPart of the Great Turkish War,-,1684,1699,TUR,MAL
-Norway,Iraq,Civil conflict in the Philippines,-,1969,Ongoing,NOR,IRQ
-Norway,Egypt,Civil conflict in the Philippines,-,1969,Ongoing,NOR,EGY
-Norway,Malaysia,Civil conflict in the Philippines,-,1969,Ongoing,NOR,MYS
-United States,Egypt,Civil conflict in the Philippines,-,1969,Ongoing,USA,EGY
-United States,Japan,Civil conflict in the Philippines,+,1969,Ongoing,USA,JPN
-United States,Australia,Civil conflict in the Philippines,+,1969,Ongoing,USA,AUS
-United States,Iraq,Civil conflict in the Philippines,-,1969,Ongoing,USA,IRQ
-United States,Philippines,Civil conflict in the Philippines,+,1969,Ongoing,USA,PHL
-United States,Indonesia,Civil conflict in the Philippines,+,1969,Ongoing,USA,IDN
-United States,Malaysia,Civil conflict in the Philippines,-,1969,Ongoing,USA,MYS
-United States,Malaysia,Civil conflict in the Philippines,+,1969,Ongoing,USA,MYS
-Egypt,Japan,Civil conflict in the Philippines,-,1969,Ongoing,EGY,JPN
-Egypt,Australia,Civil conflict in the Philippines,-,1969,Ongoing,EGY,AUS
-Egypt,Philippines,Civil conflict in the Philippines,-,1969,Ongoing,EGY,PHL
-Egypt,Malaysia,Civil conflict in the Philippines,-,1969,Ongoing,EGY,MYS
-Egypt,Indonesia,Civil conflict in the Philippines,-,1969,Ongoing,EGY,IDN
-Japan,Australia,Civil conflict in the Philippines,+,1969,Ongoing,JPN,AUS
-Japan,Philippines,Civil conflict in the Philippines,+,1969,Ongoing,JPN,PHL
-Japan,Iraq,Civil conflict in the Philippines,-,1969,Ongoing,JPN,IRQ
-Japan,Indonesia,Civil conflict in the Philippines,+,1969,Ongoing,JPN,IDN
-Japan,Malaysia,Civil conflict in the Philippines,-,1969,Ongoing,JPN,MYS
-Japan,Malaysia,Civil conflict in the Philippines,+,1969,Ongoing,JPN,MYS
-Australia,Iraq,Civil conflict in the Philippines,-,1969,Ongoing,AUS,IRQ
-Australia,Philippines,Civil conflict in the Philippines,+,1969,Ongoing,AUS,PHL
-Australia,Indonesia,Civil conflict in the Philippines,+,1969,Ongoing,AUS,IDN
-Australia,Malaysia,Civil conflict in the Philippines,-,1969,Ongoing,AUS,MYS
-Australia,Malaysia,Civil conflict in the Philippines,+,1969,Ongoing,AUS,MYS
-Iraq,Philippines,Civil conflict in the Philippines,-,1969,Ongoing,IRQ,PHL
-Iraq,Malaysia,Civil conflict in the Philippines,-,1969,Ongoing,IRQ,MYS
-Iraq,Indonesia,Civil conflict in the Philippines,-,1969,Ongoing,IRQ,IDN
-Philippines,Malaysia,Civil conflict in the Philippines,-,1969,Ongoing,PHL,MYS
-Philippines,Malaysia,Civil conflict in the Philippines,+,1969,Ongoing,PHL,MYS
-Philippines,Indonesia,Civil conflict in the Philippines,+,1969,Ongoing,PHL,IDN
-Indonesia,Malaysia,Civil conflict in the Philippines,-,1969,Ongoing,IDN,MYS
-Indonesia,Malaysia,Civil conflict in the Philippines,+,1969,Ongoing,IDN,MYS
 Armenia,Azerbaijan,Nagorno-Karabakh War,-,1988,1994,ARM,AZE
 Spain,Mexico,Navajo Wars,+,c. 1600,1866,ESP,MEX
 Portugal,China,Nepalese Civil War,-,1996,2006,PRT,CHN
@@ -2515,6 +2512,7 @@ Russia,Montenegro,Russo-Turkish War (1877–78),+,1877,1878,RUS,MNE
 Montenegro,Romania,Russo-Turkish War (1877–78),+,1877,1878,MNE,ROU
 India,United States,San Elizario Salt War,-,1877,1878,IND,USA
 Algeria,Morocco,Sand War,-,1963,1963,DZA,MAR
+Turkey,Armenia,Sasun rebellion,-,1894,1894,TUR,ARM
 Saudi Arabia,Yemen,Saudi–Yemeni War,-,1934,1934,SAU,YEM
 Denmark,France,Scanian WarPart of the Franco-Dutch War,-,1675,1679,DNK,FRA
 Ethiopia,Eritrea,Second Afar Insurgency,-,1995,Ongoing,ETH,ERI
@@ -2630,6 +2628,7 @@ United States,Iraq,Somali Civil War,-,1991,Ongoing,USA,IRQ
 United States,Somalia,Somali Civil War,-,1991,Ongoing,USA,SOM
 Iraq,Somalia,Somali Civil War,-,1991,Ongoing,IRQ,SOM
 Cuba,Angola,South African Border War,+,1966,1989,CUB,AGO
+Russia,Georgia,South Ossetia War,-,1991,1992,RUS,GEO
 Russia,China,Soviet invasion of Xinjiang,-,1934,1934,RUS,CHN
 Romania,Russia,Soviet occupation of Bessarabia and Northern BukovinaPart of World War II,-,1940,1940,ROU,RUS
 Portugal,France,Spanish Civil War,-,1936,1939,PRT,FRA
@@ -4095,6 +4094,7 @@ United States,Nicaragua,United States occupation of NicaraguaPart of the Banana 
 United States,Dominica,United States occupation of the Dominican Republic (1916–24)Part of the Banana Wars,-,1916,1924,USA,DOM
 Mexico,United States,United States occupation of VeracruzPart of the Banana Wars,-,1914,1914,MEX,USA
 Canada,United Kingdom,Upper Canada RebellionPart of the Rebellions of 1837,-,1837,1838,CAN,GBR
+Croatia,Austria,Uprising in Krivošije,-,1869,1869,HRV,AUT
 Austria,Albania,Uprising in West Hungary,-,1921,1921,AUT,ALB
 Brazil,Uruguay,Uruguayan War,-,1864,1865,BRA,URY
 Spain,United States,US occupation of West Florida,-,1810,1810,ESP,USA
