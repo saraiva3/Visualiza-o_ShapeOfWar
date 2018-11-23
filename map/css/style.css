@@ -3,7 +3,7 @@
 }
 
 img{
-   width: 600px;
+   width: 525px;
 }
 
 .text-center{
@@ -47,6 +47,11 @@ svg.map{
 
 .legend-container{
    text-align: center;
+}
+
+.index-title{
+   padding-top: 10px;
+   color: #707070;
 }
 
 .vis-container{

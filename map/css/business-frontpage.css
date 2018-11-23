@@ -4,17 +4,17 @@
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-business-frontpage/blob/master/LICENSE)
  */
 
-body {
+/* body {
   padding-top: 54px;
 }
 
 @media (min-width: 992px) {
   body {
-    padding-top: 35px;
+    padding-top: 0px;
   }
-}
+} */
 
-.business-header {
+/* .business-header {
   height: 50vh;
   min-height: 300px;
   background: url('../img/war.jpg') center center no-repeat scroll;
@@ -22,8 +22,8 @@ body {
   -moz-background-size: cover;
   background-size: cover;
   -o-background-size: cover;
-}
+} */
 
-.card {
+/* .card {
   height: 100%;
-}
+} */
