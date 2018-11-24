@@ -1,197 +1,235 @@
-let duracaoConflitos = ['Duration'];
-let quantidadePaises = ['Number of countries'];
-let nomesConflitos = [];
+let colunaAliados;
+let colunaInimigos;
+let colunaPaises;
+
+let aux;
+let auxNode;
 
 let quant = document.querySelector('#quantElementos').value;
+let normaliza = document.querySelector('#checkboxNormaliza').checked;
+let string = "";
+let chart1;
+
+window.onload = visPadrao;
+
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelector('#search-input').onkeyup = function (e){
+    string = e.target.value;
+    visFiltro(quant, string);
+  }
+}, false);
+
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelector('#checkboxEmpilhado').onchange = atualizaGrupo;
+}, false);
 
 document.querySelector('#quantElementos').addEventListener('change', function(e) {
-  if (document.querySelector('#information-duration').value){
-    document.querySelector('h2').innerText
-      = "Ranking of the longest conflicts";
-    rankingDuracao(e.target.value);
+  quant = e.target.value;
+  visFiltro(quant, string);
+}, false);
+
+document.querySelector('#checkboxNormaliza').addEventListener('change', function(e) {
+  normaliza = e.target.checked;
+  visFiltro(quant, string);
+}, false);
+
+function visPadrao(){
+
+  colunaAliados = ['Allies'];
+  colunaInimigos = ['Enemies'];
+  colunaPaises = [];
+
+  aux = [];
+  auxNode = null;
+
+  for (let i = 0; i < aliados.length; i++){
+    let e = 0;
+    for (let j = 0; j < inimigos.length; j++){
+      if (aliados[i].ID === inimigos[j].ID){
+        e = inimigos[j].Enemies;
+        break;
+      }
+    }
+    if (normaliza){
+      labelMsg = 'Percentage';
+      auxNode = {
+        "ID": aliados[i].ID,
+        "Allies": 100 * (Number(aliados[i].Allies) / (Number(aliados[i].Allies) + Number(e))),
+        "Enemies": 100 * (Number(e) / (Number(aliados[i].Allies) + Number(e))),
+        "Tag": aliados[i].Tag,
+        "Total": Number(e) + Number(aliados[i].Allies)
+      }
+    } else {
+      labelMsg = 'Number of relations';
+      auxNode = {
+        "ID": aliados[i].ID,
+        "Allies": Number(aliados[i].Allies),
+        "Enemies": Number(e),
+        "Tag": aliados[i].Tag,
+        "Total": Number(e) + Number(aliados[i].Allies)
+      }
+    }
+    aux.push(auxNode);
+  }
+
+  aux = ordena(aux);
+
+  let max = Math.min(aux.length, quant);
+
+  for (let i = 0; i < max; i++){
+    colunaAliados.push(aux[i].Allies);
+    colunaInimigos.push(aux[i].Enemies);
+    colunaPaises.push(aux[i].ID);
+  }
+
+  if (normaliza){
+    desenhaAgrupadoNormalizado();
+    ajustaLimiteEixo();
   } else {
-    document.querySelector('h2').innerText
-      = "Ranking of the conflicts with more countries involved";
-    rankingPaises(e.target.value);
+    desenhaAgrupado();
+    ajustaLimiteEixo();
   }
-}, false);
 
-document.querySelector('#information-duration').addEventListener('change', function(e) {
-  if (e.target.checked){
-    document.querySelector('h2').innerText
-      = "Ranking of the longest conflicts";
-    rankingDuracao(document.querySelector('#quantElementos').value);
+};
+
+function visFiltro(quantidade, pais){
+
+  //let pais = e.target.value;
+
+  colunaAliados = ['Allies'];
+  colunaInimigos = ['Enemies'];
+  colunaPaises = [];
+
+  aux = [];
+  auxNode = null;
+
+  aux = preencheAux(pais);
+  aux = ordena(aux);
+
+  let max = Math.min(aux.length, quantidade);
+
+  for (let i = 0; i < max; i++){
+    colunaAliados.push(aux[i].Allies);
+    colunaInimigos.push(aux[i].Enemies);
+    colunaPaises.push(aux[i].ID);
   }
-}, false);
 
-document.querySelector('#information-country').addEventListener('change', function(e) {
-  if (e.target.checked){
-    document.querySelector('h2').innerText
-      = "Ranking of the conflicts with more countries involved";
-    rankingPaises(document.querySelector('#quantElementos').value);
-  }
-}, false);
-
-window.onload = rankingDuracao(quant);
-document.querySelector('h2').innerText = "Ranking of the longest conflicts";
-
-function rankingDuracao(quantidade){
-
-  duracaoConflitos = ['Duration'];
-  nomesConflitos = [];
-
-  let dataFim;
-  let dataInicio;
-
-  let novoVetor = [];
-  let aux = null;
-
-  for (let i = 0; i < edges.length; i++){
-    dataInicio = Number(edges[i].year_start);
-    if (edges[i].year_end == "Ongoing"){
-      dataFim = 2018;
+  let agrupado = document.querySelector('#checkboxEmpilhado').checked;
+  if (agrupado){
+    if (normaliza){
+      desenhaAgrupadoNormalizado();
     } else {
-      dataFim = edges[i].year_end;
+      desenhaAgrupado();
     }
-    let d = Number(dataFim) - dataInicio;
-    aux = {
-      "nomeConflito": edges[i].conflict_name,
-      "duracao": d
-    }
-    novoVetor.push(aux);
-  }
-
-  novoVetor = ordenaDuracao(novoVetor);
-  novoVetor = agrupaConflitos(novoVetor);
-
-  let max = Math.min(quantidade, novoVetor.length);
-
-  for (let i = 0; i < quantidade; i++){
-    duracaoConflitos.push(novoVetor[i].duracao);
-    nomesConflitos.push(novoVetor[i].nomeConflito);
-  }
-
-  desenhaDuracao();
-
-}
-
-function rankingPaises(quantidade){
-
-  quantidadePaises = ['Number of countries'];
-  nomesConflitos = [];
-
-  let novoVetor = [];
-  let aux = null;
-
-  for (let i = 0; i < edges.length; i++){
-    let index = nomesConflitos.indexOf(edges[i].conflict_name);
-    if (index == -1){
-      aux = {
-        conflict_name: edges[i].conflict_name,
-        total: 2,
-        paises: [edges[i].SourceID, edges[i].TargetID]
-      };
-      nomesConflitos.push(edges[i].conflict_name);
-      novoVetor.push(aux);
+    ajustaLimiteEixo();
+  } else {
+    if (normaliza){
+      desenhaSeparadoNormalizado();
     } else {
-      let dif = 0;
-      let indexAux = novoVetor[index].paises.indexOf(edges[i].SourceID);
-      if (indexAux == -1){
-        novoVetor[index].total += 1;
-        novoVetor[index].paises.push(edges[i].SourceID);
-      }
-      indexAux = novoVetor[index].paises.indexOf(edges[i].TargetID);
-      if (indexAux == -1){
-        novoVetor[index].total += 1;
-        novoVetor[index].paises.push(edges[i].TargetID);
-      }
+      desenhaSeparado();
     }
+    ajustaLimiteEixo();
   }
 
-  novoVetor = ordenaPaises(novoVetor);
 
-  let max = Math.min(quantidade, novoVetor.length);
+};
 
-  nomesConflitos = [];
-  for (let i = 0; i < quantidade; i++){
-    quantidadePaises.push(novoVetor[i].total);
-    nomesConflitos.push(novoVetor[i].conflict_name);
-    //console.log("Conflito: ");
-    //console.log(novoVetor[i].conflict_name + ': ' + novoVetor[i].total);
-    //console.log("Países: ");
-    //console.log(novoVetor[i].paises);
-  }
-
-  desenhaPaises();
-
-}
-
-function agrupaConflitos(vetor){
-
-  let conflitos = [];
-
-  let aux = {
-    duracao: vetor[0].duracao,
-    nomeConflito: vetor[0].nomeConflito
-  };
-
-  conflitos.push(aux);
-
-  let repetido = false;
-  for (let i = 1; i < vetor.length; i++){
-    aux = null;
-    repetido = false;
-    for (let j = 0; j < conflitos.length; j++){
-      if (vetor[i].nomeConflito == conflitos[j].nomeConflito){
-        repetido = true;
-      }
-    }
-    if (!repetido){
-      aux = {
-        duracao: vetor[i].duracao,
-        nomeConflito: vetor[i].nomeConflito
-      };
-      conflitos.push(aux);
-    }
-  }
-
-  return conflitos;
-
-}
-
-function ordenaDuracao(vetor){
-  // Ordena pelo tempo de duração do conflito
+function ordena(vetor){
+  // Ordena pela quantidade de relacionamentos
   vetor.sort(function (a, b) {
-    if (Number(a.duracao) < Number(b.duracao)) { return 1; }
-    if (Number(a.duracao) > Number(b.duracao)) { return -1; }
+    if (Number(a.Total) < Number(b.Total)) { return 1; }
+    if (Number(a.Total) > Number(b.Total)) { return -1; }
     return 0;
   });
   return vetor;
 }
 
-function ordenaPaises(vetor){
-  // Ordena pela quantidade de países envolvidos
-  vetor.sort(function (a, b) {
-    if (Number(a.total) < Number(b.total)) { return 1; }
-    if (Number(a.total) > Number(b.total)) { return -1; }
-    return 0;
-  });
+function preencheAux(pais){
+  let vetor = [];
+  for (let i = 0; i < aliados.length; i++){
+    let e = 0;
+    if (aliados[i].ID.toLowerCase().includes(pais.toLowerCase())){
+      for (let j = 0; j < inimigos.length; j++){
+        if (aliados[i].ID === inimigos[j].ID){
+          e = inimigos[j].Enemies;
+          break;
+        }
+      }
+      if (normaliza){
+        labelMsg = 'Percentage';
+        auxNode = {
+          "ID": aliados[i].ID,
+          "Allies": 100 * (Number(aliados[i].Allies) / (Number(aliados[i].Allies) + Number(e))),
+          "Enemies": 100 * (Number(e) / (Number(aliados[i].Allies) + Number(e))),
+          "Tag": aliados[i].Tag,
+          "Total": Number(e) + Number(aliados[i].Allies)
+        }
+      } else {
+        labelMsg = 'Number of relations';
+        auxNode = {
+          "ID": aliados[i].ID,
+          "Allies": Number(aliados[i].Allies),
+          "Enemies": Number(e),
+          "Tag": aliados[i].Tag,
+          "Total": Number(e) + Number(aliados[i].Allies)
+        }
+      }
+      vetor.push(auxNode);
+    }
+  }
   return vetor;
 }
 
-function desenhaDuracao(){
+function atualizaGrupo(e){
+  let chart = document.querySelector('#visualizacao1');
+  console.log(e.target.checked);
+  if (e.target.checked){
+    if (normaliza){
+      desenhaAgrupadoNormalizado();
+    } else {
+      desenhaAgrupado();
+    }
+    ajustaLimiteEixo();
+  } else {
+    if (normaliza){
+      desenhaSeparadoNormalizado();
+    } else {
+      desenhaSeparado();
+    }
+    ajustaLimiteEixo();
+  }
+}
+
+function ajustaLimiteEixo(){
+  if (normaliza){
+    chart1.axis.max({y: 91});
+  }
+}
+
+function desenhaAgrupado(){
   // Desenha a visualização
-  let chart1 = c3.generate({
+  chart1 = c3.generate({
     // Determina onde desenhar
-    bindto: '#visualizacao2',
+    bindto: '#visualizacao1',
     // Define os dados que serão exibidos
     data: {
       // Colunas / séries de dados: [nomeDaSerie, valor1, valor2, ..., valorN]
       columns: [
-        duracaoConflitos
+        colunaAliados,
+        colunaInimigos
       ],
       // Tipo de série (nomeDaSerie: tipo)
-      type: 'bar'
+      type: 'bar',
+      groups: [
+        [
+          colunaAliados[0],
+          colunaInimigos[0]
+        ]
+      ]
+    },
+    // Define as cores
+    color: {
+      pattern: ['#2166ac', '#ef8a62']
     },
     // Define se a legenda deve ser exibida e onde deve ser posicionada
     legend: {
@@ -204,15 +242,16 @@ function desenhaDuracao(){
       // candidatos podem estar quebrados em mais de uma linha
       x: {
         type: 'category',
-        categories: nomesConflitos,
+        categories: colunaPaises,
         tick: {
           multiline: true
-        }
+        },
+        height: 80
       },
       y: {
         // Foi escolhido um texto e uma posição para o label do eixo y
         label: {
-          text: 'Duration (in years)',
+          text: labelMsg,
           position: 'outer-middle'
         }
       },
@@ -221,35 +260,40 @@ function desenhaDuracao(){
     // Definição da largura das barras (de diferença de votos)
     bar: {
       width: {
-        ratio: 0.7
+        ratio: 0.4
       }
     },
     // Customização da informação exibida ao passar o mouse sobre a visualização
     tooltip: {
-      show: true,
-      format: {
-        value: function (value) {
-          return (value + ' years');
-        }
-      }
+      show: true
     }
   });
-
 }
 
-function desenhaPaises(){
+function desenhaAgrupadoNormalizado(){
   // Desenha a visualização
-  let chart1 = c3.generate({
+  chart1 = c3.generate({
     // Determina onde desenhar
-    bindto: '#visualizacao2',
+    bindto: '#visualizacao1',
     // Define os dados que serão exibidos
     data: {
       // Colunas / séries de dados: [nomeDaSerie, valor1, valor2, ..., valorN]
       columns: [
-        quantidadePaises
+        colunaAliados,
+        colunaInimigos
       ],
       // Tipo de série (nomeDaSerie: tipo)
-      type: 'bar'
+      type: 'bar',
+      groups: [
+        [
+          colunaAliados[0],
+          colunaInimigos[0]
+        ]
+      ]
+    },
+    // Define as cores
+    color: {
+      pattern: ['#2166ac', '#ef8a62']
     },
     // Define se a legenda deve ser exibida e onde deve ser posicionada
     legend: {
@@ -262,15 +306,16 @@ function desenhaPaises(){
       // candidatos podem estar quebrados em mais de uma linha
       x: {
         type: 'category',
-        categories: nomesConflitos,
+        categories: colunaPaises,
         tick: {
           multiline: true
-        }
+        },
+        height: 80
       },
       y: {
         // Foi escolhido um texto e uma posição para o label do eixo y
         label: {
-          text: 'Number of countries',
+          text: labelMsg,
           position: 'outer-middle'
         }
       },
@@ -279,7 +324,7 @@ function desenhaPaises(){
     // Definição da largura das barras (de diferença de votos)
     bar: {
       width: {
-        ratio: 0.7
+        ratio: 0.4
       }
     },
     // Customização da informação exibida ao passar o mouse sobre a visualização
@@ -287,10 +332,144 @@ function desenhaPaises(){
       show: true,
       format: {
         value: function (value) {
-          return (value);
+          let f = d3.format('.1f');
+          return (f(value) + '%');
         }
       }
     }
   });
+}
 
+function desenhaSeparado(){
+  // Desenha a visualização
+  chart1 = c3.generate({
+    // Determina onde desenhar
+    bindto: '#visualizacao1',
+    // Define os dados que serão exibidos
+    data: {
+      // Colunas / séries de dados: [nomeDaSerie, valor1, valor2, ..., valorN]
+      columns: [
+        colunaAliados,
+        colunaInimigos
+      ],
+      // Tipo de série (nomeDaSerie: tipo)
+      type: 'bar'
+    },
+    // Oculta linhas verticais (grid)
+    grid: {
+      y: {
+        show: false
+      }
+    },
+    // Define as cores
+    color: {
+      pattern: ['#2166ac', '#ef8a62']
+    },
+    // Define se a legenda deve ser exibida e onde deve ser posicionada
+    legend: {
+      show: true,
+      position: 'right'
+    },
+    // Informações sobre os eixos
+    axis : {
+      // O eixo x terá o nome dos candidatos como categorias e os nomes dos
+      // candidatos podem estar quebrados em mais de uma linha
+      x: {
+        type: 'category',
+        categories: colunaPaises,
+        tick: {
+          multiline: true
+        },
+        height: 80
+      },
+      y: {
+        // Foi escolhido um texto e uma posição para o label do eixo y
+        label: {
+          text: labelMsg,
+          position: 'outer-middle'
+        }
+      },
+      rotated: true
+    },
+    // Definição da largura das barras (de diferença de votos)
+    bar: {
+      width: {
+        ratio: 0.4
+      }
+    },
+    // Customização da informação exibida ao passar o mouse sobre a visualização
+    tooltip: {
+      show: true
+    }
+  });
+}
+
+function desenhaSeparadoNormalizado(){
+  // Desenha a visualização
+  chart1 = c3.generate({
+    // Determina onde desenhar
+    bindto: '#visualizacao1',
+    // Define os dados que serão exibidos
+    data: {
+      // Colunas / séries de dados: [nomeDaSerie, valor1, valor2, ..., valorN]
+      columns: [
+        colunaAliados,
+        colunaInimigos
+      ],
+      // Tipo de série (nomeDaSerie: tipo)
+      type: 'bar'
+    },
+    // Oculta linhas verticais (grid)
+    grid: {
+      y: {
+        show: false
+      }
+    },
+    // Define as cores
+    color: {
+      pattern: ['#2166ac', '#ef8a62']
+    },
+    // Define se a legenda deve ser exibida e onde deve ser posicionada
+    legend: {
+      show: true,
+      position: 'right'
+    },
+    // Informações sobre os eixos
+    axis : {
+      // O eixo x terá o nome dos candidatos como categorias e os nomes dos
+      // candidatos podem estar quebrados em mais de uma linha
+      x: {
+        type: 'category',
+        categories: colunaPaises,
+        tick: {
+          multiline: true
+        },
+        height: 80
+      },
+      y: {
+        // Foi escolhido um texto e uma posição para o label do eixo y
+        label: {
+          text: labelMsg,
+          position: 'outer-middle'
+        }
+      },
+      rotated: true
+    },
+    // Definição da largura das barras (de diferença de votos)
+    bar: {
+      width: {
+        ratio: 0.4
+      }
+    },
+    // Customização da informação exibida ao passar o mouse sobre a visualização
+    tooltip: {
+      show: true,
+      format: {
+        value: function (value) {
+          let f = d3.format('.1f');
+          return (f(value) + '%');
+        }
+      }
+    }
+  });
 }

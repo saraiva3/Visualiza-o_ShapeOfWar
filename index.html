@@ -38,13 +38,16 @@
             </a>
             <div class="dropdown-menu"
                   aria-labelledby="navbarDropdownMenuLink">
-              <a class="dropdown-item" href="#">
+              <a class="dropdown-item" href="index.html">
+                Início
+              </a>
+              <a class="dropdown-item" href="map/visualization.html">
                 Visualização 1
               </a>
-              <a class="dropdown-item" href="#">
+              <a class="dropdown-item" href="src/visualizacao2.html">
                 Visualização 2
               </a>
-              <a class="dropdown-item" href="#">
+              <a class="dropdown-item" href="src/visualizacao3.html">
                 Visualização 3
               </a>
             </div>
@@ -62,24 +65,26 @@
   <!-- Page Content -->
   <div class="container">
     <div class="row">
-      <h2 class="col-md-12">Shape of War</h2>
+      <h1 class="col-md-12">Shape of War</h1>
       <p>
-        Este trabalho prático compreendeu o desenvolvimento parcial
-        do projeto da disciplina Visualização de Dados. Foi
-        desenvolvido um <i>heatmap</i> para apresentar dados de
-        conflitos armados que ocorreram entre nações entre 1500 e 2018.
+        Ao longo dos anos, a humanidade passou por diversos episódios de
+        conflitos armados. Alguns conflitos foram mais marcantes que outros,
+        mas todos tiveram impactos em diferentes países e no mundo. Nesse
+        contexto, foram desenvolvidas visualizações que possibilitam a
+        exploração desses diferentes conflitos mundiais que ocorreram desde 1500.
       </p>
       <p>
-        Buscou-se responder as seguintes perguntas: <i>Quantas
-        conflitos e alianças foram formadas por cada país entre os
-        anos de 1500 e 2018?</i> e <i>Para cada país, com quem eles
-        tiveram conflitos e alianças? E quantas vezes?</i>
+        Buscou-se responder as seguintes perguntas: <i>Qual o número de
+        inimizades/alianças formadas pelos países?</i>, <i>Quais as
+        inimizades/alianças dos países?</i>, <i>Quais foram os países
+        envolvidos em mais conflitos ao longo do tempo?</i>, <i>Como é a
+        distribuição dos conflitos do mundo ao longo dos anos?</i>, COMPLETAR.
       </p>
     </div>
 
     <h2 class="mt-4">Visualizações Desenvolvidas</h2>
     <div class="row">
-      <div class="col-sm-6 my-6">
+      <span class="col-md-6 my-6">
         <div class="card">
           <img class="card-img-top" src="img/vis1.png" alt="Visualizacão 1">
           <hr>
@@ -98,9 +103,9 @@
             </a>
           </div>
         </div>
-      </div>
-      <div class="col-sm-6 my-6">
-        <div class="card">
+      </span>
+      <span class="col-md-6 my-6">
+        <span class="card sub-card col-sm-6">
           <img class="card-img-top" src="img/vis2.png" alt="Visualização 2">
           <hr>
           <div class="card-body">
@@ -118,10 +123,47 @@
               Abrir! <i class="fas fa-external-link-square-alt fa-sm"></i>
             </a>
           </div>
-        </div>
-      </div>
+        </span>
+        <span class="card sub-card col-sm-6">
+          <img class="card-img-top" src="img/vis2.png" alt="Visualização 2">
+          <hr>
+          <div class="card-body">
+            <h4 class="card-title">Guerras</h4>
+            <p class="card-text">Foi mostrado a quantidade de votos que
+              cada cargo político recebeu. Foram utilizadas barras
+              empilhadas para permitir a visualização dos votos do
+              1º e 2º turno de forma separada.
+            </p>
+          </div>
+          <div class="card-footer">
+            <a target="_blank"
+                href="cargoMaisVotado.html"
+                class="btn btn-primary">
+              Abrir! <i class="fas fa-external-link-square-alt fa-sm"></i>
+            </a>
+          </div>
+        </span>
+      </span>
     </div>
   </div>
+
+  <footer class="page-footer font-small">
+    <div class="text-center">
+      Desenvolvido por:
+      <a href="mailto:amandafp@ufmg.br">
+        Amanda Fernandes Pereira,
+      </a>
+      <a href="mailto:amanda.pereira@dcc.ufmg.br">
+        Fabrício Horácio Sales Pereira,
+      </a>
+      <a href="mailto:amanda.pereira@dcc.ufmg.br">
+        Lucas Saraiva,
+      </a>
+      <a href="mailto:otobraz@ufmg.br">
+        Oto Braz
+      </a>
+    </div>
+  </footer>
 
   <!-- Fim Rodape -->
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

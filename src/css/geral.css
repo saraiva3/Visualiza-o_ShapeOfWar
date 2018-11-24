@@ -23,8 +23,20 @@
   margin-left: 20px;
 }
 
-h2 {
+h1, h2 {
   text-align: center;
+}
+
+h6 {
+  color: #BDBDBD;
+  text-align: right;
+}
+
+.navbar {
+  padding-top: 0.2rem; /* 0px does not look good on small screens */
+  padding-bottom: 0.2rem;
+  font-size: 10pt;      /* Just because I am using big size font */
+  line-height: 1em;
 }
 
 .c3-axis-y text {
