@@ -315,3 +315,15 @@ body{
   padding-top: 0.3em;
   padding-bottom: 0.3em;
 }
+
+h6 {
+  color: #BDBDBD;
+  text-align: right;
+}
+
+.navbar {
+  padding-top: 0.2rem; /* 0px does not look good on small screens */
+  padding-bottom: 0.2rem;
+  font-size: 10pt;      /* Just because I am using big size font */
+  line-height: 1em;
+}

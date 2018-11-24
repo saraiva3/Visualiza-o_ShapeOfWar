@@ -35,6 +35,10 @@ footer {
   color: #BDBDBD;
   padding-top: 0.2rem;
   padding-bottom: 0.4rem;
+  bottom: 0;
+  position: fixed;
+  width: 100%;
+  z-index: 1;
 }
 
 a, a:hover {
@@ -45,4 +49,16 @@ a, a:hover {
 
 .sub-card {
   display: inline;
+}
+
+.pre-vis {
+  padding: 5px;
+}
+
+.col-md-6 .row {
+  padding-top: 5px;
+}
+
+.espaco-branco {
+  height: 2%;
 }

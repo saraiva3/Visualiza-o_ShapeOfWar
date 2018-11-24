@@ -16,44 +16,48 @@
 </head>
 <body>
 
-  <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container">
-      <div class="title">
-        <a class="navbar-brand title"
-            href="index.html">
-          Number of Conflicts Faced by Each Country Since 1500
-        </a>
-      </div>
-      <button class="navbar-toggler"
-              type="button"
-              data-toggle="collapse"
-              data-target="#navbarResponsive"
-              aria-controls="navbarResponsive"
-              aria-expanded="false"
-              aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarResponsive">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="visualization.html">
-              Visualização
-              <span class="sr-only">(current)</span>
-            </a>
-          </li>
-          <li class="nav-item">
+    <div class="col-md-1">
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+          <li class="nav-item dropdown">
             <a class="nav-link"
-                target="_blank"
-                href="https://github.com/otobraz">
-              Oto Braz Assunção
+                href="#"
+                id="navbarDropdownMenuLink"
+                role="button"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false">
+              <span class="navbar-toggler-icon"></span>
             </a>
+            <div class="dropdown-menu"
+                  aria-labelledby="navbarDropdownMenuLink">
+              <a class="dropdown-item" href="index.html">
+                Início
+              </a>
+              <a class="dropdown-item" href="map/visualization.html">
+                Visualização 1
+              </a>
+              <a class="dropdown-item" href="src/visualizacao2.html">
+                Visualização 2
+              </a>
+              <a class="dropdown-item" href="src/visualizacao3.html">
+                Visualização 3
+              </a>
+            </div>
           </li>
         </ul>
       </div>
     </div>
+    <div class="col-md-5">
+      <h6>Number of Conflicts Faced by Each Country Since 1500</h6>
+    </div>
+    <div class="col-md-2"></div>
+    <div class="col-md-4">
+      <h6>Projeto Final - Visualização de Dados</h6>
+    </div>
+
   </nav>
-  <!-- Navigation -->
 
   <div class="container-fluid">
     <div class="row">

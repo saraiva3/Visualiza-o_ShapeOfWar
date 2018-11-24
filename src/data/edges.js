@@ -13112,7 +13112,7 @@ let edges = [
   {
     "source": "Denmark",
     "target": "Spain",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -13122,7 +13122,7 @@ let edges = [
   {
     "source": "Denmark",
     "target": "France",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -13132,7 +13132,7 @@ let edges = [
   {
     "source": "Denmark",
     "target": "United Kingdom",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -13142,7 +13142,7 @@ let edges = [
   {
     "source": "Denmark",
     "target": "Italy",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -13152,7 +13152,7 @@ let edges = [
   {
     "source": "Denmark",
     "target": "Bulgaria",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -13162,7 +13162,7 @@ let edges = [
   {
     "source": "Denmark",
     "target": "Romania",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -13172,7 +13172,7 @@ let edges = [
   {
     "source": "Denmark",
     "target": "Canada",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -13182,7 +13182,7 @@ let edges = [
   {
     "source": "Denmark",
     "target": "Norway",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -13192,7 +13192,7 @@ let edges = [
   {
     "source": "Denmark",
     "target": "Belgium",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -13202,7 +13202,7 @@ let edges = [
   {
     "source": "Denmark",
     "target": "Greece",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -13212,7 +13212,7 @@ let edges = [
   {
     "source": "Denmark",
     "target": "United States",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -13222,7 +13222,7 @@ let edges = [
   {
     "source": "Denmark",
     "target": "Turkey",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -13232,7 +13232,7 @@ let edges = [
   {
     "source": "Denmark",
     "target": "Jordan",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -13242,7 +13242,7 @@ let edges = [
   {
     "source": "Denmark",
     "target": "Libya",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "-",
     "start": 2011,
     "end": 2011,
@@ -13252,7 +13252,7 @@ let edges = [
   {
     "source": "Denmark",
     "target": "Qatar",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -13262,7 +13262,7 @@ let edges = [
   {
     "source": "Norway",
     "target": "Italy",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -13272,7 +13272,7 @@ let edges = [
   {
     "source": "Norway",
     "target": "Bulgaria",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -13282,7 +13282,7 @@ let edges = [
   {
     "source": "Norway",
     "target": "Romania",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -13292,7 +13292,7 @@ let edges = [
   {
     "source": "Norway",
     "target": "France",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -13302,7 +13302,7 @@ let edges = [
   {
     "source": "Norway",
     "target": "Canada",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -13312,7 +13312,7 @@ let edges = [
   {
     "source": "Norway",
     "target": "Belgium",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -13322,7 +13322,7 @@ let edges = [
   {
     "source": "Norway",
     "target": "Greece",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -13332,7 +13332,7 @@ let edges = [
   {
     "source": "Norway",
     "target": "United States",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -13342,7 +13342,7 @@ let edges = [
   {
     "source": "Norway",
     "target": "Turkey",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -13352,7 +13352,7 @@ let edges = [
   {
     "source": "Norway",
     "target": "United Kingdom",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -13362,7 +13362,7 @@ let edges = [
   {
     "source": "Norway",
     "target": "Jordan",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -13372,7 +13372,7 @@ let edges = [
   {
     "source": "Norway",
     "target": "Spain",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -13382,7 +13382,7 @@ let edges = [
   {
     "source": "Norway",
     "target": "Libya",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "-",
     "start": 2011,
     "end": 2011,
@@ -13392,7 +13392,7 @@ let edges = [
   {
     "source": "Norway",
     "target": "Qatar",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -13402,7 +13402,7 @@ let edges = [
   {
     "source": "Sweden",
     "target": "Libya",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "-",
     "start": 2011,
     "end": 2011,
@@ -13412,7 +13412,7 @@ let edges = [
   {
     "source": "Spain",
     "target": "France",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -13422,7 +13422,7 @@ let edges = [
   {
     "source": "Spain",
     "target": "United Kingdom",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -13432,7 +13432,7 @@ let edges = [
   {
     "source": "Spain",
     "target": "United States",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -13442,7 +13442,7 @@ let edges = [
   {
     "source": "Spain",
     "target": "Belgium",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -13452,7 +13452,7 @@ let edges = [
   {
     "source": "Spain",
     "target": "Bulgaria",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -13462,7 +13462,7 @@ let edges = [
   {
     "source": "Spain",
     "target": "Canada",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -13472,7 +13472,7 @@ let edges = [
   {
     "source": "Spain",
     "target": "Greece",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -13482,7 +13482,7 @@ let edges = [
   {
     "source": "Spain",
     "target": "Italy",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -13492,7 +13492,7 @@ let edges = [
   {
     "source": "Spain",
     "target": "Jordan",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -13502,7 +13502,7 @@ let edges = [
   {
     "source": "Spain",
     "target": "Romania",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -13512,7 +13512,7 @@ let edges = [
   {
     "source": "Spain",
     "target": "Turkey",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -13522,7 +13522,7 @@ let edges = [
   {
     "source": "Spain",
     "target": "Libya",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "-",
     "start": 2011,
     "end": 2011,
@@ -13532,7 +13532,7 @@ let edges = [
   {
     "source": "Spain",
     "target": "Qatar",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -13542,7 +13542,7 @@ let edges = [
   {
     "source": "France",
     "target": "United Kingdom",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -13552,7 +13552,7 @@ let edges = [
   {
     "source": "France",
     "target": "Italy",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -13562,7 +13562,7 @@ let edges = [
   {
     "source": "France",
     "target": "United States",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -13572,7 +13572,7 @@ let edges = [
   {
     "source": "France",
     "target": "Bulgaria",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -13582,7 +13582,7 @@ let edges = [
   {
     "source": "France",
     "target": "Belgium",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -13592,7 +13592,7 @@ let edges = [
   {
     "source": "France",
     "target": "Canada",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -13602,7 +13602,7 @@ let edges = [
   {
     "source": "France",
     "target": "Romania",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -13612,7 +13612,7 @@ let edges = [
   {
     "source": "France",
     "target": "Greece",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -13622,7 +13622,7 @@ let edges = [
   {
     "source": "France",
     "target": "Turkey",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -13632,7 +13632,7 @@ let edges = [
   {
     "source": "France",
     "target": "Libya",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "-",
     "start": 2011,
     "end": 2011,
@@ -13642,7 +13642,7 @@ let edges = [
   {
     "source": "France",
     "target": "Jordan",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -13652,7 +13652,7 @@ let edges = [
   {
     "source": "France",
     "target": "Qatar",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -13662,7 +13662,7 @@ let edges = [
   {
     "source": "United States",
     "target": "Canada",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -13672,7 +13672,7 @@ let edges = [
   {
     "source": "United States",
     "target": "United Kingdom",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -13682,7 +13682,7 @@ let edges = [
   {
     "source": "United States",
     "target": "Italy",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -13692,7 +13692,7 @@ let edges = [
   {
     "source": "United States",
     "target": "Bulgaria",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -13702,7 +13702,7 @@ let edges = [
   {
     "source": "United States",
     "target": "Belgium",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -13712,7 +13712,7 @@ let edges = [
   {
     "source": "United States",
     "target": "Romania",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -13722,7 +13722,7 @@ let edges = [
   {
     "source": "United States",
     "target": "Greece",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -13732,7 +13732,7 @@ let edges = [
   {
     "source": "United States",
     "target": "Turkey",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -13742,7 +13742,7 @@ let edges = [
   {
     "source": "United States",
     "target": "Libya",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "-",
     "start": 2011,
     "end": 2011,
@@ -13752,7 +13752,7 @@ let edges = [
   {
     "source": "United States",
     "target": "Jordan",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -13762,7 +13762,7 @@ let edges = [
   {
     "source": "United States",
     "target": "Qatar",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -13772,7 +13772,7 @@ let edges = [
   {
     "source": "Bulgaria",
     "target": "Greece",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -13782,7 +13782,7 @@ let edges = [
   {
     "source": "Bulgaria",
     "target": "Romania",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -13792,7 +13792,7 @@ let edges = [
   {
     "source": "Bulgaria",
     "target": "Belgium",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -13802,7 +13802,7 @@ let edges = [
   {
     "source": "Bulgaria",
     "target": "Canada",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -13812,7 +13812,7 @@ let edges = [
   {
     "source": "Bulgaria",
     "target": "Italy",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -13822,7 +13822,7 @@ let edges = [
   {
     "source": "Bulgaria",
     "target": "Turkey",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -13832,7 +13832,7 @@ let edges = [
   {
     "source": "Bulgaria",
     "target": "United Kingdom",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -13842,7 +13842,7 @@ let edges = [
   {
     "source": "Bulgaria",
     "target": "Jordan",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -13852,7 +13852,7 @@ let edges = [
   {
     "source": "Bulgaria",
     "target": "Libya",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "-",
     "start": 2011,
     "end": 2011,
@@ -13862,7 +13862,7 @@ let edges = [
   {
     "source": "Bulgaria",
     "target": "Qatar",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -13872,7 +13872,7 @@ let edges = [
   {
     "source": "Canada",
     "target": "United Kingdom",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -13882,7 +13882,7 @@ let edges = [
   {
     "source": "Canada",
     "target": "Belgium",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -13892,7 +13892,7 @@ let edges = [
   {
     "source": "Canada",
     "target": "Italy",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -13902,7 +13902,7 @@ let edges = [
   {
     "source": "Canada",
     "target": "Romania",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -13912,7 +13912,7 @@ let edges = [
   {
     "source": "Canada",
     "target": "Greece",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -13922,7 +13922,7 @@ let edges = [
   {
     "source": "Canada",
     "target": "Turkey",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -13932,7 +13932,7 @@ let edges = [
   {
     "source": "Canada",
     "target": "Jordan",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -13942,7 +13942,7 @@ let edges = [
   {
     "source": "Canada",
     "target": "Libya",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "-",
     "start": 2011,
     "end": 2011,
@@ -13952,7 +13952,7 @@ let edges = [
   {
     "source": "Canada",
     "target": "Qatar",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -13962,7 +13962,7 @@ let edges = [
   {
     "source": "United Kingdom",
     "target": "Italy",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -13972,7 +13972,7 @@ let edges = [
   {
     "source": "United Kingdom",
     "target": "Greece",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -13982,7 +13982,7 @@ let edges = [
   {
     "source": "United Kingdom",
     "target": "Romania",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -13992,7 +13992,7 @@ let edges = [
   {
     "source": "United Kingdom",
     "target": "Belgium",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -14002,7 +14002,7 @@ let edges = [
   {
     "source": "United Kingdom",
     "target": "Turkey",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -14012,7 +14012,7 @@ let edges = [
   {
     "source": "United Kingdom",
     "target": "Jordan",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -14022,7 +14022,7 @@ let edges = [
   {
     "source": "United Kingdom",
     "target": "Libya",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "-",
     "start": 2011,
     "end": 2011,
@@ -14032,7 +14032,7 @@ let edges = [
   {
     "source": "United Kingdom",
     "target": "Qatar",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -14042,7 +14042,7 @@ let edges = [
   {
     "source": "Italy",
     "target": "Belgium",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -14052,7 +14052,7 @@ let edges = [
   {
     "source": "Italy",
     "target": "Romania",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -14062,7 +14062,7 @@ let edges = [
   {
     "source": "Italy",
     "target": "Greece",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -14072,7 +14072,7 @@ let edges = [
   {
     "source": "Italy",
     "target": "Turkey",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -14082,7 +14082,7 @@ let edges = [
   {
     "source": "Italy",
     "target": "Jordan",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -14092,7 +14092,7 @@ let edges = [
   {
     "source": "Italy",
     "target": "Libya",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "-",
     "start": 2011,
     "end": 2011,
@@ -14102,7 +14102,7 @@ let edges = [
   {
     "source": "Italy",
     "target": "Qatar",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -14112,7 +14112,7 @@ let edges = [
   {
     "source": "Romania",
     "target": "Belgium",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -14122,7 +14122,7 @@ let edges = [
   {
     "source": "Romania",
     "target": "Greece",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -14132,7 +14132,7 @@ let edges = [
   {
     "source": "Romania",
     "target": "Turkey",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -14142,7 +14142,7 @@ let edges = [
   {
     "source": "Romania",
     "target": "Jordan",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -14152,7 +14152,7 @@ let edges = [
   {
     "source": "Romania",
     "target": "Libya",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "-",
     "start": 2011,
     "end": 2011,
@@ -14162,7 +14162,7 @@ let edges = [
   {
     "source": "Romania",
     "target": "Qatar",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -14172,7 +14172,7 @@ let edges = [
   {
     "source": "Belgium",
     "target": "Greece",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -14182,7 +14182,7 @@ let edges = [
   {
     "source": "Belgium",
     "target": "Turkey",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -14192,7 +14192,7 @@ let edges = [
   {
     "source": "Belgium",
     "target": "Jordan",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -14202,7 +14202,7 @@ let edges = [
   {
     "source": "Belgium",
     "target": "Libya",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "-",
     "start": 2011,
     "end": 2011,
@@ -14212,7 +14212,7 @@ let edges = [
   {
     "source": "Belgium",
     "target": "Qatar",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -14222,7 +14222,7 @@ let edges = [
   {
     "source": "Greece",
     "target": "Turkey",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -14232,7 +14232,7 @@ let edges = [
   {
     "source": "Greece",
     "target": "Jordan",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -14242,7 +14242,7 @@ let edges = [
   {
     "source": "Greece",
     "target": "Libya",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "-",
     "start": 2011,
     "end": 2011,
@@ -14252,7 +14252,7 @@ let edges = [
   {
     "source": "Greece",
     "target": "Qatar",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -14262,7 +14262,7 @@ let edges = [
   {
     "source": "Turkey",
     "target": "Jordan",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -14272,7 +14272,7 @@ let edges = [
   {
     "source": "Turkey",
     "target": "Libya",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "-",
     "start": 2011,
     "end": 2011,
@@ -14282,7 +14282,7 @@ let edges = [
   {
     "source": "Turkey",
     "target": "Qatar",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -14292,7 +14292,7 @@ let edges = [
   {
     "source": "Jordan",
     "target": "Libya",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "-",
     "start": 2011,
     "end": 2011,
@@ -14302,7 +14302,7 @@ let edges = [
   {
     "source": "Jordan",
     "target": "Qatar",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "+",
     "start": 2011,
     "end": 2011,
@@ -14312,7 +14312,7 @@ let edges = [
   {
     "source": "Libya",
     "target": "Qatar",
-    "conflict": "Libyan Civil War (2011)",
+    "conflict": "Libyan Civil War",
     "relation": "-",
     "start": 2011,
     "end": 2011,
