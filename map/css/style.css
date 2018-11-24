@@ -321,6 +321,10 @@ h6 {
   text-align: right;
 }
 
+.title {
+  color: white;
+}
+
 .navbar {
   padding-top: 0.2rem; /* 0px does not look good on small screens */
   padding-bottom: 0.2rem;

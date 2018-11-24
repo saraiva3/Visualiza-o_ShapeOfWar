@@ -47,6 +47,11 @@ a, a:hover {
   color: #F2F2F2;
 }
 
+h6 a, h6 a:hover {
+  text-decoration: none;
+  color: black;
+}
+
 .sub-card {
   display: inline;
 }
