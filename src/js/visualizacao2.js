@@ -229,7 +229,7 @@ function desenhaAgrupado(){
     },
     // Define as cores
     color: {
-      pattern: ['#2166ac', '#ef8a62']
+      pattern: ['#2166ac', '#ca0020']
     },
     // Define se a legenda deve ser exibida e onde deve ser posicionada
     legend: {
@@ -293,7 +293,7 @@ function desenhaAgrupadoNormalizado(){
     },
     // Define as cores
     color: {
-      pattern: ['#2166ac', '#ef8a62']
+      pattern: ['#2166ac', '#ca0020']
     },
     // Define se a legenda deve ser exibida e onde deve ser posicionada
     legend: {
@@ -363,7 +363,7 @@ function desenhaSeparado(){
     },
     // Define as cores
     color: {
-      pattern: ['#2166ac', '#ef8a62']
+      pattern: ['#2166ac', '#ca0020']
     },
     // Define se a legenda deve ser exibida e onde deve ser posicionada
     legend: {
@@ -427,7 +427,7 @@ function desenhaSeparadoNormalizado(){
     },
     // Define as cores
     color: {
-      pattern: ['#2166ac', '#ef8a62']
+      pattern: ['#2166ac', '#ca0020']
     },
     // Define se a legenda deve ser exibida e onde deve ser posicionada
     legend: {

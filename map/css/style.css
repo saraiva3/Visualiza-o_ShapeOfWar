@@ -109,6 +109,11 @@ header {
 
 .title{
   text-align: center;
+  color: white;
+}
+
+.vis-links{
+   text-align: left;
 }
 
 .line-chart-title{
@@ -316,18 +321,6 @@ body{
   padding-bottom: 0.3em;
 }
 
-h6 {
-  color: #BDBDBD;
-  text-align: right;
-}
-
-.title {
-  color: white;
-}
-
-.navbar {
-  padding-top: 0.2rem; /* 0px does not look good on small screens */
-  padding-bottom: 0.2rem;
-  font-size: 10pt;      /* Just because I am using big size font */
-  line-height: 1em;
+h7{
+   color: rgba(255,255,255,.5);
 }
